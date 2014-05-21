@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo omxplayer-sync -mu /media/internal/* &
+sudo omxplayer-sync -mu --no-keys /media/internal/* &
