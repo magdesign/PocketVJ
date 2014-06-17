@@ -37,5 +37,3 @@ apt-get -y install php5-common php5-cgi php5 php5-mysql
 apt-get -y install screen
 
 apt-get -y install fbi
-
-apt-get -y install ttf-mscorefonts-installer
