@@ -136,6 +136,19 @@ if ($_GET['action'] == 'screenoff') {
 	system("sudo /opt/vc/bin/tvservice -o");
 }
 
+
+if ($_GET['action'] == 'codecinfo') {
+	$output = shell_exec('mediainfo --Inform="General;%CompleteName%  Format: %Format% Codec: %CodecID%  Bitrate: %OverallBitRate%" /media/internal/*');
+    echo "<pre>$output</pre>";
+}
+
+if ($_GET['action'] == 'movieinfo') {
+	$output = shell_exec('mediainfo --Inform="Video;Videosize: %Width%x%Height% pixel" /media/internal/*');
+    echo "<pre>$output</pre>";
+}
+
+
+
 if ($_GET['action'] == 'firmware') {
 	echo "upgrade player and sync";
 	system("sudo cp /media/usb/omxplayer /usr/bin/omxplayer");
@@ -206,7 +219,7 @@ function MM_preloadImages() { //v3.0
 <p class="header_02"><span class="header_02top">_____________________________________________</span></p>
 <p class="header_02"><span class="header_02top"><span class="description">status messages above this line in orange</span></span></p>
 <p class="header_02"><span class="header_02top">***************************************************************</span></p>
-<p class="header_02"><span class="header_02top">PocketVJ Control Panel </span><span class="header_02top">v0.13 ©2014 </span></p>
+<p class="header_02"><span class="header_02top">PocketVJ Control Panel </span><span class="header_02top">v0.14 ©2014 </span></p>
 <p class="header_02"><span class="header_02top">by magdesign.ch</span></p>
 <p class="header_02"><span class="header_02top">***************************************************************</span></p>
 <table width="380" border="0" align="center" cellspacing="4">
@@ -266,7 +279,7 @@ function MM_preloadImages() { //v3.0
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td height="40"><a href="?action=getresolution"><img src="pics/resolution.png" width="190" height="40" alt="RESOLUTION" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">get the actual resolution</p></td>
+    <td width="190" height="40" class="description"><p align="left">get the actual resolution of connected display / projector</p></td>
   </tr>
   <tr>
     <td width="190" height="40"><a href="?action=screenon"><img src="pics/screen_on.png" width="190" height="40" alt="screen on" /></a></td>
@@ -275,6 +288,17 @@ function MM_preloadImages() { //v3.0
   <tr>
     <td width="190" height="40"><a href="?action=screenoff"><img src="pics/screen_off.png" width="190" height="40" alt="screen off" /></a></td>
     <td width="190" height="40" class="description"><p align="left">put the connected screen to power sleep (CEC)</p></td>
+  </tr>
+</table>
+<p>Movie Information:</p>
+<table width="380" border="0" align="center" cellspacing="4">
+  <tr>
+    <td width="190" height="40"><a href="?action=codecinfo"><img src="pics/codecinfo.png" width="190" height="40" alt="MASTER" /></a></td>
+    <td width="190" height="40" class="description"><p align="left">get infos of movies on internal storage: Name Format Codec Bitrate</p></td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=movieinfo"><img src="pics/movieresolution.png" width="190" height="40" alt="update" /></a></td>
+    <td height="40" class="description"><p align="left">get movie resolution</p></td>
   </tr>
 </table>
 <p>Settings for Boot/Autostart:</p>
