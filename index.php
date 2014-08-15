@@ -1,156 +1,163 @@
 <?php
 
 if ($_GET['action'] == 'stop') {
-	echo "player stopped";
+	$outputtext =  "player stopped";
 	system("sudo /var/www/sync/omxkill.py");
 }
 
 if ($_GET['action'] == 'startmaster') {
-	echo "start player as master";
-	system("sudo /var/www/sync/startmaster.py");
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo omxplayer-sync -mu /media/internal/* > /dev/null 2>&1 & echo $!");
+	$outputtext = "start player as master";
 }
 
 if ($_GET['action'] == 'startslave') {
-	echo "start player as slave";
-	system("sudo /var/www/sync/startslave.py");
+	$outputtext =  "start player as slave";
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo omxplayer-sync -lu /media/internal/* > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'startusb') {
-	echo "start player in usb mode";
-	system("sudo /var/www/sync/startusb.py");
+	$outputtext =  "start player in usb mode";
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo omxplayer-sync -mu /media/usb/* > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'stopimage') {
-	echo "image player stopped";
+	$outputtext =  "image player stopped";
 	system("sudo killall fbi");
 }
 
 if ($_GET['action'] == 'image') {
-	echo "start image player";
-	system("sudo /var/www/sync/startimage.py");
+	$outputtext =  "start image player";
+	system("sudo killall fbi");
+	system("sudo /var/www/sync/startimage.py > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'imageusb') {
-	echo "start image player from usb";
-	system("sudo /var/www/sync/startimageusb.py");
+	$outputtext =  "start image player from usb";
+	system("sudo killall fbi");
+	system("sudo /var/www/sync/startimageusb.py > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'stoppdf') {
-	echo "pdf player stopped";
+	$outputtext = "pdf player stopped";
 	system("sudo killall fbgs");
 }
 
 if ($_GET['action'] == 'startppt') {
-	echo "start pdf player";
-	system("sudo /var/www/sync/startppt.py");
+	$outputtext =  "start pdf player";
+	system("sudo /var/www/sync/startppt.py > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'pdfusb') {
-	echo "start pdf player from usb";
-	system("sudo /var/www/sync/startpdfusb.py");
+	$outputtext =  "start pdf player from usb";
+	system("sudo /var/www/sync/startpdfusb.py > /dev/null 2>&1 & echo $!");
 }
 
 
 if ($_GET['action'] == 'reboot') {
-	echo "rebooting now!";
+	$outputtext =  "rebooting now!";
 	system("sudo reboot");
 }
 
 if ($_GET['action'] == 'eject') {
-	echo "usb stick unmounted";
+	$outputtext =  "usb stick unmounted";
 	system("sudo umount /dev/sda1");
 }
 
 if ($_GET['action'] == 'mount') {
-	echo "usb stick mounted";
+	$outputtext =  "usb stick mounted";
 	system("sudo mount /dev/sda1 /media/usb/");
 }
 
 if ($_GET['action'] == 'master') {
-	echo "master set";
+	$outputtext = "master set";
 	system("sudo cp /var/www/sync/rc.local.master /etc/rc.local");
 }
 
 
 if ($_GET['action'] == 'slave') {
-	echo "slave set";
+	$outputtext =  "slave set";
 	system("sudo cp /var/www/sync/rc.local.slave /etc/rc.local");
 }
 
 if ($_GET['action'] == 'extension1') {
-	echo "extension1 set";
+	$outputtext =  "extension1 set";
 	system("sudo cp /var/www/sync/rc.local.ext1 /etc/rc.local");
 }
 
 if ($_GET['action'] == 'usb') {
-	echo "usb mode set";
+	$outputtext =  "usb mode set";
 	system("sudo cp /var/www/sync/rc.local.usb /etc/rc.local");
 }
 
 if ($_GET['action'] == 'setimage') {
-	echo "usb mode set";
+	$outputtext =  "usb mode set";
 	system("sudo cp /var/www/sync/rc.local.image /etc/rc.local");
 }
 
 if ($_GET['action'] == 'setimageusb') {
-	echo "usb mode set";
+	$outputtext =  "usb mode set";
 	system("sudo cp /var/www/sync/rc.local.imageusb /etc/rc.local");
 }
 
 if ($_GET['action'] == 'bootconf') {
-	echo "custom boot conf to boot";
+	$outputtext =  "custom boot conf to boot";
 	system("sudo cp /media/internal/config.txt /boot/config.txt");
 }
 
 if ($_GET['action'] == 'hdmi1') {
-	echo "forced to use hdmi VGA";
+	$output =  "forced to use hdmi VGA";
 	system("sudo cp /var/www/sync/forcehdmi1 /boot/config.txt");
 }
 
 if ($_GET['action'] == 'hdmi4') {
-	echo "forced to use hdmi 720p";
+	$outputtext =  "forced to use hdmi 720p";
 	system("sudo cp /var/www/sync/forcehdmi4 /boot/config.txt");
 }
 
 if ($_GET['action'] == 'hdmivga') {
-	echo "hdmi to vga 800x600";
+	$outputtext =  "hdmi to vga 800x600";
 	system("sudo cp /var/www/sync/forcevga /boot/config.txt");
 }
 
 if ($_GET['action'] == 'clean') {
-	echo "clean hidden files";
+	$outputtext =  "clean hidden files";
 	system("sudo rm -R /media/media/.[DTf_]*");
 }
 
 if ($_GET['action'] == 'getresolution') {
 	$output = shell_exec('sudo tvservice -s');
-    echo "<pre>$output</pre>";
+    $outputtext =  "<pre>$output</pre>";
 	
 }
 
 if ($_GET['action'] == 'screenon') {
 	system("sudo /opt/vc/bin/tvservice -p");
+	$outputtext =  "screen on / wakeup";
 }
 
 if ($_GET['action'] == 'screenoff') {
 	system("sudo /opt/vc/bin/tvservice -o");
+	$outputtext =  "screen off / sleep";
 }
 
 
 if ($_GET['action'] == 'codecinfo') {
-	$output = shell_exec('mediainfo --Inform="General;%CompleteName%  Format: %Format% Codec: %CodecID%  Bitrate: %OverallBitRate%" /media/internal/*');
-    echo "<pre>$output</pre>";
+	$output = shell_exec('mediainfo --Inform="General;%CompleteName%  Format: %Format% Codec: %CodecID%  Bitrate: %OverallBitRate%  " /media/internal/*');
+   $outputtext =  "<pre>$output</pre>";
 }
 
 if ($_GET['action'] == 'movieinfo') {
-	$output = shell_exec('mediainfo --Inform="Video;Videosize: %Width%x%Height% pixel" /media/internal/*');
-    echo "<pre>$output</pre>";
+	$output = shell_exec('mediainfo --Inform="Video;Videosize: %Width%x%Height% pixel  " /media/internal/*');
+	$outputtext =  "<pre>$output</pre>";
 }
 
 
 
 if ($_GET['action'] == 'firmware') {
-	echo "upgrade player and sync";
+	$outputtext =  "upgrade player and sync";
 	system("sudo cp /media/usb/omxplayer /usr/bin/omxplayer");
 	system("sudo cp /media/usb/omxplayer.bin /usr/bin/omxplayer.bin");
 	system("sudo cp /media/usb/omxplayer-sync /usr/bin/omxplayer-sync");
@@ -158,8 +165,9 @@ if ($_GET['action'] == 'firmware') {
 }
 
 if ($_GET['action'] == 'controlpanel') {
-	echo "update controlpanel";
+	$outputtext =  "update controlpanel";
 	system("sudo cp -r /media/usb/www/* /var/www");
+	
 	
 }
 
@@ -216,12 +224,15 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="header_02top">_____________________________________________</span></p>
-<p class="header_02"><span class="header_02top"><span class="description">status messages above this line in orange</span></span></p>
-<p class="header_02"><span class="header_02top">***************************************************************</span></p>
-<p class="header_02"><span class="header_02top">PocketVJ Control Panel </span><span class="header_02top">v0.14 ©2014 </span></p>
-<p class="header_02"><span class="header_02top">by magdesign.ch</span></p>
-<p class="header_02"><span class="header_02top">***************************************************************</span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14b </span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top"><span class="header_02"><span class="description">____________________________________________</span></span></span></span></p>
+<table width="380" border="1" align="center" cellpadding="4">
+  <tr>
+    <td><p class="header_02"><?php echo $outputtext; ?></p>
+    <p class="header_02">&nbsp;</p></td>
+  </tr>
+</table>
+<p class="header_02"><span class="header_02top">***********************<span class="description">status messages  in orange</span>************************</span></p>
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td width="190" height="40"><a href="?action=stop"><img src="pics/stop.png" width="190" height="40" alt="STOP" /></a></td>
@@ -355,9 +366,8 @@ function MM_preloadImages() { //v3.0
     <td height="40" class="description"><p align="left">Update to new ControlPanel from USB</p></td>
   </tr>
 </table>
-<p>&nbsp;</p>
 <p><span class="header_02top">***************************************************************</span></p>
-<p class="header_02">© PocketVJ.com</p>
+<p class="header_02"><span class="header_02top">©2014 by magdesign.ch</span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
