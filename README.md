@@ -6,13 +6,16 @@ PocketVJ Control Panel
 
 This file is used to control the PocketVJ over the webbrowser.
 
-Put the index.php into your web directory followed by the sync folder.
+Put the index.php into your web directory followed by the sync and extplorer folder.
 
 This file is only useful if you use the omxplayer-sync https://github.com/turingmachine/omxplayer-sync script.
 
-You should use our build of omxplayer!
+Read the installations instructions to get also the custom build of omxplayer.
 
-Dependencies:
+I know its oldschool coded, will make it responsive soon...
+
+
+Dependencies to install:
 
 apt-get -y install ntfs-3g
 
