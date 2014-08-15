@@ -134,24 +134,27 @@ if ($_GET['action'] == 'getresolution') {
 }
 
 if ($_GET['action'] == 'screenon') {
-	system("sudo /opt/vc/bin/tvservice -p");
-	$outputtext =  "screen on / wakeup";
+	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -p');	
 }
 
+
 if ($_GET['action'] == 'screenoff') {
-	system("sudo /opt/vc/bin/tvservice -o");
-	$outputtext =  "screen off / sleep";
+	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -o');
 }
 
 
 if ($_GET['action'] == 'codecinfo') {
 	$output = shell_exec('mediainfo --Inform="General;%CompleteName%  Format: %Format% Codec: %CodecID%  Bitrate: %OverallBitRate%  " /media/internal/*');
-   $outputtext =  "<pre>$output</pre>";
+   $preoutputtext =  "<pre>$output</pre>";
+   $outputtext = wordwrap($preoutputtext, 33, "<br />\n");
 }
 
 if ($_GET['action'] == 'movieinfo') {
 	$output = shell_exec('mediainfo --Inform="Video;Videosize: %Width%x%Height% pixel  " /media/internal/*');
-	$outputtext =  "<pre>$output</pre>";
+	$preoutputtext2 = "<pre>$output</pre>";
+    $newtext = wordwrap($preoutputtext2, 30, "<br />\n");
+    $outputtext = "$newtext\n";
+	
 }
 
 
