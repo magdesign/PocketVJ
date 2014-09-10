@@ -55,7 +55,6 @@ if ($_GET['action'] == 'pdfusb') {
 	system("sudo /var/www/sync/startpdfusb.py > /dev/null 2>&1 & echo $!");
 }
 
-
 if ($_GET['action'] == 'reboot') {
 	$outputtext =  "rebooting now!";
 	system("sudo reboot");
@@ -75,7 +74,6 @@ if ($_GET['action'] == 'master') {
 	$outputtext = "master set";
 	system("sudo cp /var/www/sync/rc.local.master /etc/rc.local");
 }
-
 
 if ($_GET['action'] == 'slave') {
 	$outputtext =  "slave set";
@@ -129,8 +127,7 @@ if ($_GET['action'] == 'clean') {
 
 if ($_GET['action'] == 'getresolution') {
 	$output = shell_exec('sudo tvservice -s');
-    $outputtext =  "<pre>$output</pre>";
-	
+	$outputtext =  "<pre>$output</pre>";
 }
 
 if ($_GET['action'] == 'screenon') {
@@ -142,36 +139,37 @@ if ($_GET['action'] == 'screenoff') {
 	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -o');
 }
 
-
 if ($_GET['action'] == 'codecinfo') {
 	$output = shell_exec('mediainfo --Inform="General;%CompleteName%  Format: %Format% Codec: %CodecID%  Bitrate: %OverallBitRate%  " /media/internal/*');
-   $preoutputtext =  "<pre>$output</pre>";
-   $outputtext = wordwrap($preoutputtext, 33, "<br />\n");
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 33, "<br />\n");
 }
 
 if ($_GET['action'] == 'movieinfo') {
 	$output = shell_exec('mediainfo --Inform="Video;Videosize: %Width%x%Height% pixel  " /media/internal/*');
 	$preoutputtext2 = "<pre>$output</pre>";
-    $newtext = wordwrap($preoutputtext2, 30, "<br />\n");
-    $outputtext = "$newtext\n";
-	
+	$newtext = wordwrap($preoutputtext2, 30, "<br />\n");
+	$outputtext = "$newtext\n";
 }
-
-
 
 if ($_GET['action'] == 'firmware') {
 	$outputtext =  "upgrade player and sync";
 	system("sudo cp /media/usb/omxplayer /usr/bin/omxplayer");
 	system("sudo cp /media/usb/omxplayer.bin /usr/bin/omxplayer.bin");
 	system("sudo cp /media/usb/omxplayer-sync /usr/bin/omxplayer-sync");
-	
 }
 
 if ($_GET['action'] == 'controlpanel') {
 	$outputtext =  "update controlpanel";
 	system("sudo cp -r /media/usb/www/* /var/www");
-	
-	
+}
+
+if ($_GET['action'] == 'volume_up') {
+	system("sudo su - pi -c 'amixer set Master 10%+'");
+}
+
+if ($_GET['action'] == 'volume_down') {
+	system("sudo su - pi -c 'amixer set Master 10%-'");
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
