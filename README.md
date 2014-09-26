@@ -42,3 +42,5 @@ apt-get -y install screen
 apt-get -y install fbi
 
 apt-get -y install mediainfo
+
+apt-get -y install gparted
