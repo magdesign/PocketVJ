@@ -225,7 +225,7 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14b </span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14c </span></span></p>
 <p class="header_02"><span class="description"><span class="header_02top"><span class="header_02"><span class="description">____________________________________________</span></span></span></span></p>
 <table width="380" border="1" align="center" cellpadding="4">
   <tr>
@@ -311,6 +311,17 @@ function MM_preloadImages() { //v3.0
   <tr>
     <td height="40"><a href="?action=movieinfo"><img src="pics/movieresolution.png" width="190" height="40" alt="update" /></a></td>
     <td height="40" class="description"><p align="left">get movie resolution</p></td>
+  </tr>
+</table>
+<p>Settings for Audio:</p>
+<table width="380" border="0" align="center" cellspacing="4">
+  <tr>
+    <td width="190" height="40"><a href="?action=volume_up"><img src="pics/volume_up.png" width="95" height="40" alt="Volume up" /></a><a href="?action=volume_down"><img src="pics/volume_down.png" width="95" height="40" alt="Volume down" /></a></td>
+    <td width="190" height="40" class="description"><p align="left">change the volume settings</p></td>
+  </tr>
+  <tr>
+    <td height="40"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /><img src="pics/audio_both.png" width="57" height="40" alt="both" /></td>
+    <td height="40" class="description"><p align="left">change audio output (coming soon)</p></td>
   </tr>
 </table>
 <p>Settings for Boot/Autostart:</p>
