@@ -166,10 +166,12 @@ if ($_GET['action'] == 'controlpanel') {
 
 if ($_GET['action'] == 'volume_up') {
 	system("sudo su - pi -c 'amixer set Master 10%+'");
+	$outputtext =  "<pre>$output</pre>";
 }
 
 if ($_GET['action'] == 'volume_down') {
 	system("sudo su - pi -c 'amixer set Master 10%-'");
+	$outputtext =  "<pre>$output</pre>";
 }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -316,11 +318,11 @@ function MM_preloadImages() { //v3.0
 <p>Settings for Audio:</p>
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
-    <td width="190" height="40"><a href="?action=volume_up"><img src="pics/volume_up.png" width="95" height="40" alt="Volume up" /></a><a href="?action=volume_down"><img src="pics/volume_down.png" width="95" height="40" alt="Volume down" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">change the volume settings</p></td>
+    <td width="192" height="40"><a href="?action=volume_up"><img src="pics/volume_up.png" width="95" height="40" alt="Volume up" /></a><a href="?action=volume_down"><img src="pics/volume_down.png" width="95" height="40" alt="Volume down" /></a></td>
+    <td height="40" class="description"><p align="left">change the volume settings</p></td>
   </tr>
   <tr>
-    <td height="40"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /><img src="pics/audio_both.png" width="57" height="40" alt="both" /></td>
+    <td width="192" height="40"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /><img src="pics/audio_both.png" width="57" height="40" alt="both" /></td>
     <td height="40" class="description"><p align="left">change audio output (coming soon)</p></td>
   </tr>
 </table>
