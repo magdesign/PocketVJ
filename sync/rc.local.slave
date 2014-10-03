@@ -5,5 +5,5 @@ TERM=linux setterm -blank 0 -powersave off -powerdown 0 -foreground black -clear
 TERM=linux setterm -blank 0 -powersave off -powerdown 0 -foreground black -clear -cursor off >/dev/tty1
 TERM=linux setterm -blank 0 -powersafe off -powerdown 0 >/dev/tty2
 /opt/vc/bin/tvservice -p
-/usr/bin/omxplayer-sync -lu /media/internal/* &
+/usr/bin/omxplayer-sync -lu -o both /media/internal/* &
 exit 0

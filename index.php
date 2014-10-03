@@ -174,6 +174,26 @@ if ($_GET['action'] == 'volume_down') {
 	$outputtext =  "<pre>$output</pre>";
 }
 
+
+if ($_GET['action'] == 'hdmi_out') {
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /etc/rc.local");
+	$outputtext =  "Audio set to HDMI";
+}
+
+if ($_GET['action'] == 'jack_out') {
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /etc/rc.local");
+	$outputtext =  "Audio set to Jack";
+}
+
+if ($_GET['action'] == 'both_out') {
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /etc/rc.local");
+	$outputtext =  "Audio set to both";
+}
+
+
+
+
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -227,7 +247,7 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14c </span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14d </span></span></p>
 <p class="header_02"><span class="description"><span class="header_02top"><span class="header_02"><span class="description">____________________________________________</span></span></span></span></p>
 <table width="380" border="1" align="center" cellpadding="4">
   <tr>
@@ -322,8 +342,8 @@ function MM_preloadImages() { //v3.0
     <td height="40" class="description"><p align="left">change the volume settings</p></td>
   </tr>
   <tr>
-    <td width="192" height="40"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /><img src="pics/audio_both.png" width="57" height="40" alt="both" /></td>
-    <td height="40" class="description"><p align="left">change audio output (coming soon)</p></td>
+    <td width="192" height="40"><a href="?action=hdmi_out"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /></a><a href="?action=jack_out"><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /></a><a href="?action=both_out"><img src="pics/audio_both.png" width="57" height="40" alt="both" /></a></td>
+    <td height="40" class="description"><p align="left">change audio output </p></td>
   </tr>
 </table>
 <p>Settings for Boot/Autostart:</p>
