@@ -343,7 +343,8 @@ function MM_preloadImages() { //v3.0
   </tr>
   <tr>
     <td width="192" height="40"><a href="?action=hdmi_out"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /></a><a href="?action=jack_out"><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /></a><a href="?action=both_out"><img src="pics/audio_both.png" width="57" height="40" alt="both" /></a></td>
-    <td height="40" class="description"><p align="left">change audio output </p></td>
+    <td height="40" class="description"><p align="left">change audio output </p>
+    <p align="left">needs reboot</p></td>
   </tr>
 </table>
 <p>Settings for Boot/Autostart:</p>
