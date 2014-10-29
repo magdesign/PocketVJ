@@ -91,12 +91,12 @@ if ($_GET['action'] == 'usb') {
 }
 
 if ($_GET['action'] == 'setimage') {
-	$outputtext =  "usb mode set";
+	$outputtext =  "set to image player";
 	system("sudo cp /var/www/sync/rc.local.image /etc/rc.local");
 }
 
 if ($_GET['action'] == 'setimageusb') {
-	$outputtext =  "usb mode set";
+	$outputtext =  "image player usb mode set";
 	system("sudo cp /var/www/sync/rc.local.imageusb /etc/rc.local");
 }
 
@@ -157,6 +157,8 @@ if ($_GET['action'] == 'firmware') {
 	system("sudo cp /media/usb/omxplayer /usr/bin/omxplayer");
 	system("sudo cp /media/usb/omxplayer.bin /usr/bin/omxplayer.bin");
 	system("sudo cp /media/usb/omxplayer-sync /usr/bin/omxplayer-sync");
+	system("sudo chmod 755 /var/www -R");
+	
 }
 
 if ($_GET['action'] == 'controlpanel') {
@@ -247,7 +249,7 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14d </span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14e </span></span></p>
 <p class="header_02"><span class="description"><span class="header_02top"><span class="header_02"><span class="description">____________________________________________</span></span></span></span></p>
 <table width="380" border="1" align="center" cellpadding="4">
   <tr>
@@ -259,7 +261,7 @@ function MM_preloadImages() { //v3.0
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td width="190" height="40"><a href="?action=stop"><img src="pics/stop.png" width="190" height="40" alt="STOP" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">stop the player before doing any other action</p></td>
+    <td width="190" height="40" class="description"><p align="left">stop the video player before doing any other action</p></td>
   </tr>
   <tr>
     <td height="40"><a href="?action=startmaster"><img src="pics/start.png" width="190" height="40" alt="START" /></a></td>
@@ -279,11 +281,11 @@ function MM_preloadImages() { //v3.0
   </tr>
   <tr>
     <td height="40"><a href="?action=image"><img src="pics/start_image.png" width="190" height="40" alt="imageplayer" /></a></td>
-    <td height="40" class="description"><div align="left">starts the image viewer (plays all image files from internal storage) within 5sec.</div></td>
+    <td height="40" class="description"><div align="left">starts the image viewer (plays all .jpg image files from internal storage) within 5sec.</div></td>
   </tr>
   <tr>
     <td height="40"><a href="?action=imageusb"><img src="pics/start_imageusb.png" width="190" height="40" alt="imageplayer from usb" /></a></td>
-    <td height="40" class="description"><div align="left">starts the image viewer (plays all image files from usb storage) within 5sec.</div></td>
+    <td height="40" class="description"><div align="left">starts the image viewer (plays all .jpg image files from usb storage) within 5sec.</div></td>
   </tr>
 </table>
 <p>&nbsp;</p>
