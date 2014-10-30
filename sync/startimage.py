@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo fbi -T 1 -noverbose -noonce -a -blend 200 -t 5 /media/internal/*.jpg &
+sudo fbi -T 1 -noverbose -noonce -a -blend 200 -t 5 /media/internal/*.{jpg,jpeg,png,bmp} &

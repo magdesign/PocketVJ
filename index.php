@@ -122,7 +122,7 @@ if ($_GET['action'] == 'hdmivga') {
 
 if ($_GET['action'] == 'clean') {
 	$outputtext =  "clean hidden files";
-	system("sudo rm -R /media/media/.[DTf_]*");
+	system("sudo rm -R /media/internal/.[DTf_]*");
 }
 
 if ($_GET['action'] == 'getresolution') {
@@ -157,13 +157,13 @@ if ($_GET['action'] == 'firmware') {
 	system("sudo cp /media/usb/omxplayer /usr/bin/omxplayer");
 	system("sudo cp /media/usb/omxplayer.bin /usr/bin/omxplayer.bin");
 	system("sudo cp /media/usb/omxplayer-sync /usr/bin/omxplayer-sync");
-	system("sudo chmod 755 /var/www -R");
 	
 }
 
 if ($_GET['action'] == 'controlpanel') {
 	$outputtext =  "update controlpanel";
 	system("sudo cp -r /media/usb/www/* /var/www");
+	system("sudo chmod 755 /var/www -R");
 }
 
 if ($_GET['action'] == 'volume_up') {
@@ -249,8 +249,7 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14e </span></span></p>
-<p class="header_02"><span class="description"><span class="header_02top"><span class="header_02"><span class="description">____________________________________________</span></span></span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14f </span></span></p>
 <table width="380" border="1" align="center" cellpadding="4">
   <tr>
     <td><p class="header_02"><?php echo $outputtext; ?></p>
@@ -258,6 +257,7 @@ function MM_preloadImages() { //v3.0
   </tr>
 </table>
 <p class="header_02"><span class="header_02top">***********************<span class="description">status messages  in orange</span>************************</span></p>
+<p>Video Playback Control:</p>
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td width="190" height="40"><a href="?action=stop"><img src="pics/stop.png" width="190" height="40" alt="STOP" /></a></td>
@@ -275,9 +275,12 @@ function MM_preloadImages() { //v3.0
     <td height="40"><a href="?action=startusb"><img src="pics/start_usb.png" width="190" height="40" alt="START_usb" /></a></td>
     <td width="190" height="40" class="description"><div align="left">may take a while, dont hit it more than ones!</div></td>
   </tr>
+</table>
+<p>Image Playback Control:</p>
+<table width="380" border="0" align="center" cellspacing="4">
   <tr>
-    <td height="40"><a href="?action=stopimage"><img src="pics/stopimage.png" width="190" height="40" alt="stop image viewer" /></a></td>
-    <td height="40" class="description"><div align="left">stops the image viewer</div></td>
+    <td width="190" height="40"><a href="?action=stopimage"><img src="pics/stopimage.png" width="190" height="40" alt="stop image viewer" /></a></td>
+    <td width="190" height="40" class="description"><div align="left">stops the image viewer</div></td>
   </tr>
   <tr>
     <td height="40"><a href="?action=image"><img src="pics/start_image.png" width="190" height="40" alt="imageplayer" /></a></td>
@@ -288,7 +291,7 @@ function MM_preloadImages() { //v3.0
     <td height="40" class="description"><div align="left">starts the image viewer (plays all .jpg image files from usb storage) within 5sec.</div></td>
   </tr>
 </table>
-<p>&nbsp;</p>
+<p>Settings for Display:</p>
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td width="190" height="40"><a href="/eXtplorer/index.php" target="new"><img src="pics/open.png" width="190" height="40" alt="OPEN_filebrowser" /></a></td>
@@ -375,9 +378,12 @@ function MM_preloadImages() { //v3.0
     <td height="40"><a href="?action=setimageusb"><img src="pics/setimageusb.png" width="190" height="40" alt="set usb image player" /></a></td>
     <td height="40" class="description"><p align="left">set autostart to image viewer from usb, plays all .jpg images from usb(stick must be present on boot!)</p></td>
   </tr>
+</table>
+<p>Settings Resolution:</p>
+<table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td height="40"><a href="?action=bootconf"><img src="pics/bootconf.png" width="190" height="40" alt="boot conf custom" /></a></td>
-    <td height="40" class="description"><p align="left">copy custom conf.txt from internal to bootloader</p></td>
+    <td height="40" class="description"><p align="left">copy custom conf.txt from internal storage to bootloader</p></td>
   </tr>
   <tr>
     <td width="190" height="40"><a href="?action=hdmi1"><img src="pics/hdmi1.png" width="190" height="40" alt="HDMI1" /></a></td>
@@ -402,8 +408,13 @@ function MM_preloadImages() { //v3.0
     <td height="40"><a href="?action=controlpanel"><img src="pics/cp_upgrade.png" width="190" height="40" alt="update" /></a></td>
     <td height="40" class="description"><p align="left">Update to new ControlPanel from USB</p></td>
   </tr>
+  <tr>
+    <td height="40">coming...</td>
+    <td height="40" class="description">Install depencies. Only do this if upgrading from older CP and some functions dont work (e.g.codec info)</td>
+  </tr>
 </table>
 <p><span class="header_02top">***************************************************************</span></p>
+<p class="header_02"><span class="header_02top">!! read the manual on www.pocketvj.com !!</span></p>
 <p class="header_02"><span class="header_02top">©2014 by magdesign.ch</span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
