@@ -163,7 +163,7 @@ if ($_GET['action'] == 'firmware') {
 if ($_GET['action'] == 'controlpanel') {
 	$outputtext =  "update controlpanel";
 	system("sudo cp -r /media/usb/www/* /var/www");
-	system("sudo chmod 755 /var/www -R");
+	system("sudo chmod 755 -R /var/www");
 }
 
 if ($_GET['action'] == 'volume_up') {
