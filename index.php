@@ -40,6 +40,21 @@ if ($_GET['action'] == 'imageusb') {
 	system("sudo /var/www/sync/startimageusb.py > /dev/null 2>&1 & echo $!");
 }
 
+
+if ($_GET['action'] == 'audio') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo omxplayer-sync -mu /media/internal/*.mp3 > /dev/null 2>&1 & echo $!");
+	$outputtext = "start audio player";
+}
+
+
+if ($_GET['action'] == 'audiousb') {
+	$outputtext =  "start audio player in usb mode";
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo omxplayer-sync -mu /media/usb/*.mp3 > /dev/null 2>&1 & echo $!");
+}
+
+
 if ($_GET['action'] == 'stoppdf') {
 	$outputtext = "pdf player stopped";
 	system("sudo killall fbgs");
@@ -99,6 +114,18 @@ if ($_GET['action'] == 'setimageusb') {
 	$outputtext =  "image player usb mode set";
 	system("sudo cp /var/www/sync/rc.local.imageusb /etc/rc.local");
 }
+
+if ($_GET['action'] == 'setaudio') {
+	$outputtext =  "autostart audio set";
+	system("sudo cp /var/www/sync/rc.local.audio /etc/rc.local");
+}
+
+if ($_GET['action'] == 'setaudiousb') {
+	$outputtext =  "autostart audio usb set";
+	system("sudo cp /var/www/sync/rc.local.audiousb /etc/rc.local");
+}
+
+
 
 if ($_GET['action'] == 'bootconf') {
 	$outputtext =  "custom boot conf to boot";
@@ -249,7 +276,7 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.14f </span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.15 </span></span></p>
 <table width="380" border="1" align="center" cellpadding="4">
   <tr>
     <td><p class="header_02"><?php echo $outputtext; ?></p>
@@ -289,6 +316,21 @@ function MM_preloadImages() { //v3.0
   <tr>
     <td height="40"><a href="?action=imageusb"><img src="pics/start_imageusb.png" width="190" height="40" alt="imageplayer from usb" /></a></td>
     <td height="40" class="description"><div align="left">starts the image viewer (plays all .jpg image files from usb storage) within 5sec.</div></td>
+  </tr>
+</table>
+<p>Audio Playback Control:</p>
+<table width="380" border="0" align="center" cellspacing="4">
+  <tr>
+    <td width="190" height="40"><a href="?action=stop"><img src="pics/stopaudio.png" width="190" height="40" alt="stop" /></a></td>
+    <td width="190" height="40" class="description"><div align="left">stops the audio player</div></td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=audio"><img src="pics/startaudio.png" width="190" height="40" alt="audio start" /></a></td>
+    <td height="40" class="description"><div align="left">starts the audio player (plays all .mp3  files from internal storage)</div></td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=audiousb"><img src="pics/startaudiousb.png" width="190" height="40" alt="start audio usb" /></a></td>
+    <td height="40" class="description"><div align="left">starts the audio player (plays all .mp3 files from usb storage)</div></td>
   </tr>
 </table>
 <p>Settings for Display:</p>
@@ -356,11 +398,11 @@ function MM_preloadImages() { //v3.0
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
     <td width="190" height="40"><a href="?action=master"><img src="pics/setmaster.png" width="190" height="40" alt="MASTER" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set to autostart as master</p></td>
+    <td width="190" height="40" class="description"><p align="left">set to autostart as master (video)</p></td>
   </tr>
   <tr>
     <td width="190" height="40"><a href="?action=slave"><img src="pics/setslave.png" width="190" height="40" alt="SLAVE" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set to autostart as slave</p></td>
+    <td width="190" height="40" class="description"><p align="left">set to autostart as slave (video)</p></td>
   </tr>
   <tr>
     <td height="40"><a href="?action=extension1"><img src="pics/extension1.png" width="190" height="40" alt="EXT1" /></a></td>
@@ -368,7 +410,11 @@ function MM_preloadImages() { //v3.0
   </tr>
   <tr>
     <td width="190" height="40"><a href="?action=usb"><img src="pics/setusb.png" width="190" height="40" alt="USB" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to usb disk mode, there must be a usb stick attached at boot!</p></td>
+    <td width="190" height="40" class="description"><p align="left">set autostart to usb disk mode, there must be a usb stick attached at boot! (video)</p></td>
+  </tr>
+  <tr>
+    <td height="40">&nbsp;</td>
+    <td height="40" class="description">&nbsp;</td>
   </tr>
   <tr>
     <td height="40"><a href="?action=setimage"><img src="pics/setimage.png" width="190" height="40" alt="set image player" /></a></td>
@@ -377,6 +423,18 @@ function MM_preloadImages() { //v3.0
   <tr>
     <td height="40"><a href="?action=setimageusb"><img src="pics/setimageusb.png" width="190" height="40" alt="set usb image player" /></a></td>
     <td height="40" class="description"><p align="left">set autostart to image viewer from usb, plays all .jpg images from usb(stick must be present on boot!)</p></td>
+  </tr>
+  <tr>
+    <td height="40">&nbsp;</td>
+    <td height="40" class="description">&nbsp;</td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=setaudio"><img src="pics/setaudio.png" width="190" height="40" alt="set to audio" /></a></td>
+    <td height="40" class="description">set autostart to audio player</td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=setaudiousb"><img src="pics/setaudiousb.png" width="190" height="40" alt="set audio usb" /></a></td>
+    <td height="40" class="description">set autostart to audio player usb</td>
   </tr>
 </table>
 <p>Settings Resolution:</p>
