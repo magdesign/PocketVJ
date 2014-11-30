@@ -125,11 +125,19 @@ if ($_GET['action'] == 'setaudiousb') {
 	system("sudo cp /var/www/sync/rc.local.audiousb /etc/rc.local");
 }
 
-
-
 if ($_GET['action'] == 'bootconf') {
 	$outputtext =  "custom boot conf to boot";
 	system("sudo cp /media/internal/config.txt /boot/config.txt");
+}
+
+if ($_GET['action'] == 'bootconfusb') {
+	$outputtext =  "custom boot conf from usb to boot";
+	system("sudo cp /media/usb/config.txt /boot/config.txt");
+}
+
+if ($_GET['action'] == 'hdmireset') {
+	$output =  "reset resolution settings";
+	system("sudo cp /var/www/sync/defaulthdmi /boot/config.txt");
 }
 
 if ($_GET['action'] == 'hdmi1') {
@@ -140,6 +148,11 @@ if ($_GET['action'] == 'hdmi1') {
 if ($_GET['action'] == 'hdmi4') {
 	$outputtext =  "forced to use hdmi 720p";
 	system("sudo cp /var/www/sync/forcehdmi4 /boot/config.txt");
+}
+
+if ($_GET['action'] == 'hdmi5') {
+	$outputtext =  "forced to fullHD 1080";
+	system("sudo cp /var/www/sync/forcehdmi5 /boot/config.txt");
 }
 
 if ($_GET['action'] == 'hdmivga') {
@@ -444,23 +457,35 @@ function MM_preloadImages() { //v3.0
     <td height="40" class="description">set autostart to audio player usb</td>
   </tr>
 </table>
-<p>Settings Resolution:</p>
+<p>Settings for Screen Resolution:</p>
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
-    <td height="40"><a href="?action=bootconf"><img src="pics/bootconf.png" width="190" height="40" alt="boot conf custom" /></a></td>
-    <td height="40" class="description"><p align="left">copy custom conf.txt from internal storage to bootloader</p></td>
+    <td height="40"><a href="?action=hdmireset"><img src="pics/hdmireset.png" width="190" height="40" alt="hadmi reset" /></a></td>
+    <td height="40" class="description">reset to default settings</td>
   </tr>
   <tr>
-    <td width="190" height="40"><a href="?action=hdmi1"><img src="pics/hdmi1.png" width="190" height="40" alt="HDMI1" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to force HDMI to VGA</p></td>
+    <td width="190" height="40"><a href="?action=hdmi5"><img src="pics/hdmi5.png" width="190" height="40" alt="force full HD" /></a></td>
+    <td width="190" height="40" class="description"><p align="left">set autostart to force output for TV HDMI 1080i 60Hz</p></td>
   </tr>
   <tr>
     <td width="190" height="40"><a href="?action=hdmi4"><img src="pics/hdmi4.png" width="190" height="40" alt="HDMI4" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to force HDMI 720p</p></td>
+    <td width="190" height="40" class="description"><p align="left">set autostart to force output for TV HDMI 720p 60Hz</p></td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=hdmi1"><img src="pics/hdmi1.png" width="190" height="40" alt="HDMI1" /></a></td>
+    <td height="40" class="description"><p align="left">set autostart to force HDMI to VGA Adaptor</p></td>
   </tr>
   <tr>
     <td height="40"><a href="?action=forcevga"><img src="pics/forcevga.png" width="190" height="40" alt="force vga" /></a></td>
-    <td height="40" class="description"><p align="left">set autostart to use HDMI to VGA converter with a resolution of 800x600</p></td>
+    <td height="40" class="description">set autostart to use HDMI to VGA adaptor with a resolution of 800x600</td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=bootconf"><img src="pics/bootconf.png" width="190" height="40" alt="boot conf custom" /></a></td>
+    <td height="40" class="description">copy custom conf.txt from internal storage to bootloader, see manual! can help with display issues</td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=bootconfusb"><img src="pics/bootconf.png" width="190" height="40" alt="boot conf custom" /></a></td>
+    <td height="40" class="description">copy custom conf.txt from USB storage to bootloader, see manual! can help with display issues</td>
   </tr>
 </table>
 <p>Settings for Firmware/System:</p>
