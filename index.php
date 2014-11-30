@@ -193,6 +193,13 @@ if ($_GET['action'] == 'controlpanel') {
 	system("sudo chmod 755 -R /var/www");
 }
 
+if ($_GET['action'] == 'syncreset') {
+	$outputtext =  "reset syncscript";
+	system("sudo cp /var/www/sync/omxplayer-sync /usr/bin/omxplayer-sync");
+	system("sudo chmod 755 -R /var/www");
+}
+
+
 if ($_GET['action'] == 'volume_up') {
 	system("sudo su - pi -c 'amixer set Master 10%+'");
 	$outputtext =  "<pre>$output</pre>";
@@ -276,7 +283,7 @@ function MM_preloadImages() { //v3.0
 </head>
 
 <body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.15 </span></span></p>
+<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.15a </span></span></p>
 <table width="380" border="1" align="center" cellpadding="4">
   <tr>
     <td><p class="header_02"><?php echo $outputtext; ?></p>
@@ -459,12 +466,16 @@ function MM_preloadImages() { //v3.0
 <p>Settings for Firmware/System:</p>
 <table width="380" border="0" align="center" cellspacing="4">
   <tr>
-    <td width="190" height="40"><a href="?action=firmware"><img src="pics/firmware_update.png" width="190" height="40" alt="MASTER" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">Upgrade to new Firmware from USB Stick</p></td>
+    <td width="190" height="40"><a href="?action=syncreset"><img src="pics/sync-reset.png" width="190" height="40" alt="sync reset" /></a></td>
+    <td width="190" height="40" class="description"><p align="left">Reset Sync-script to original settings (can help if player not running)</p></td>
   </tr>
   <tr>
     <td height="40"><a href="?action=controlpanel"><img src="pics/cp_upgrade.png" width="190" height="40" alt="update" /></a></td>
-    <td height="40" class="description"><p align="left">Update to new ControlPanel from USB</p></td>
+    <td height="40" class="description">Update to new ControlPanel from USB</td>
+  </tr>
+  <tr>
+    <td height="40"><a href="?action=firmware"><img src="pics/firmware_update.png" width="190" height="40" alt="MASTER" /></a></td>
+    <td height="40" class="description"><p align="left">Upgrade to new Firmware from USB Stick</p></td>
   </tr>
   <tr>
     <td height="40">coming...</td>
