@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 if ($_GET['action'] == 'stop') {
 	$outputtext =  "player stopped";
@@ -7,20 +7,27 @@ if ($_GET['action'] == 'stop') {
 
 if ($_GET['action'] == 'startmaster') {
 	exec("sudo /var/www/sync/omxkill.py");
-	exec("sudo omxplayer-sync -mu /media/internal/* > /dev/null 2>&1 & echo $!");
+	exec("sudo /var/www/sync/startmaster.py");
 	$outputtext = "start player as master";
 }
 
-if ($_GET['action'] == 'startslave') {
-	$outputtext =  "start player as slave";
+if ($_GET['action'] == 'startmasteronce') {
 	exec("sudo /var/www/sync/omxkill.py");
-	exec("sudo omxplayer-sync -lu /media/internal/* > /dev/null 2>&1 & echo $!");
+	exec("sudo /var/www/sync/startmasterone.py");
+	$outputtext = "start player as master once";
+}
+
+
+if ($_GET['action'] == 'startslave') {
+       exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startslave.py");
+	$outputtext =  "start player as slave";
 }
 
 if ($_GET['action'] == 'startusb') {
-	$outputtext =  "start player in usb mode";
-	exec("sudo /var/www/sync/omxkill.py");
-	exec("sudo omxplayer-sync -mu /media/usb/* > /dev/null 2>&1 & echo $!");
+       exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmasterusb.py");
+	$outputtext =  "start player in usb mode";	
 }
 
 if ($_GET['action'] == 'stopimage') {
@@ -170,6 +177,18 @@ if ($_GET['action'] == 'getresolution') {
 	$outputtext =  "<pre>$output</pre>";
 }
 
+if ($_GET['action'] == 'testscreen') {
+       exec("sudo /var/www/sync/omxkill.py");
+	$outputtext =  "testscreen active";
+       system("sudo fbi -T 1 -noverbose -a /var/www/sync/testscreen.png &");
+}
+
+if ($_GET['action'] == 'testscreenoff') {
+       system("sudo killall fbi");
+	$outputtext =  "image player stopped";
+}
+
+
 if ($_GET['action'] == 'screenon') {
 	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -p');	
 }
@@ -201,14 +220,22 @@ if ($_GET['action'] == 'firmware') {
 }
 
 if ($_GET['action'] == 'controlpanel') {
-	$outputtext =  "update controlpanel";
+	$outputtext =  "update ControlPanel USB";
 	system("sudo cp -r /media/usb/www/* /var/www");
 	system("sudo chmod 755 -R /var/www");
 }
 
-if ($_GET['action'] == 'syncreset') {
-	$outputtext =  "reset syncscript";
+if ($_GET['action'] == 'controlpanelintern') {
+	$outputtext =  "update ControlPanel internal";
+	system("sudo cp -r /media/internal/www/* /var/www");
+	system("sudo chmod 755 -R /var/www");
+}
+
+if ($_GET['action'] == 'factoryreset') {
+	$outputtext =  "factory reset system";
 	system("sudo cp /var/www/sync/omxplayer-sync /usr/bin/omxplayer-sync");
+       system("sudo cp /var/www/sync/defaulthdmi /boot/config.txt");
+       system("sudo cp /var/www/sync/rc.local.master /etc/rc.local"); 
 	system("sudo chmod 755 -R /var/www");
 }
 
@@ -226,293 +253,356 @@ if ($_GET['action'] == 'volume_down') {
 
 if ($_GET['action'] == 'hdmi_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /etc/rc.local");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterusb.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterone.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startslave.py");
 	$outputtext =  "Audio set to HDMI";
 }
 
 if ($_GET['action'] == 'jack_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o local/' /etc/rc.local");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterusb.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterone.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startslave.py");
 	$outputtext =  "Audio set to Jack";
 }
 
 if ($_GET['action'] == 'both_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o both/' /etc/rc.local");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterusb.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterone.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startslave.py");
 	$outputtext =  "Audio set to both";
 }
 
 
+?>
+<!DOCTYPE html>
+<html class="html" lang="en-GB">
+ <head>
 
-
-
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Configuration</title>
-<style type="text/css">
-body {
-	background-color: #FFFFFF;
-	font-family: "Courier New", Courier, monospace;
-	font-size: 18px;
-	font-style: normal;
-	text-align: center;
-	color: #F90;
-}
-.text_01 {
-	text-align: center;
-}
-.text_01 {
-	font-size: 10px;
-}
-.header_02 {
-	font-size: 18px;
-	font-weight: bold;
-	text-align: center;
-	font-family: Arial, Helvetica, sans-serif;
-}
-.description {
-	font-size: 10px;
-}
-.description {
-	color: #333;
-	font-family: Arial, Helvetica, sans-serif;
-}
-.header_02top {
-}
-.header_02top {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
-	font-style: normal;
-	color: #000;
-	font-weight: normal;
-}
-</style>
-<script type="text/javascript">
-function MM_preloadImages() { //v3.0
-  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
-    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
-    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
-}
+  <script type="text/javascript">
+   if(typeof Muse == "undefined") window.Muse = {}; window.Muse.assets = {"required":["jquery-1.8.3.min.js", "museutils.js", "webpro.js", "musewpdisclosure.js", "jquery.watch.js", "index.css"], "outOfDate":[]};
 </script>
-</head>
+  
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+  <meta name="generator" content="2014.2.1.284"/>
+  <link rel="shortcut icon" href="images/controlpanel-favicon.ico?114042110"/>
+  <title>ControlPanel</title>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="css/site_global.css?365011649"/>
+  <link rel="stylesheet" type="text/css" href="css/master_a-master.css?3914653927"/>
+  <link rel="stylesheet" type="text/css" href="css/index.css?468752007" id="pagesheet"/>
+  <!-- Other scripts -->
+  <script type="text/javascript">
+   document.documentElement.className += ' js';
+</script>
+    <!--custom head HTML-->
 
-<body>
-<p class="header_02"><span class="description"><span class="header_02top">PocketVJ Control Panel v0.15a </span></span></p>
-<table width="380" border="1" align="center" cellpadding="4">
-  <tr>
-    <td><p class="header_02"><?php echo $outputtext; ?></p>
-    <p class="header_02">&nbsp;</p></td>
-  </tr>
+
+ </head>
+ <body>
+
+  <div class="clearfix" id="page"><!-- column -->
+   <div class="clearfix colelem" id="u75-4"><!-- content -->
+    <p>PocketVJ Control Panel v0.2</p>
+   </div>
+   <div class="clearfix colelem" id="pu78-4"><!-- group -->
+    <div class="clearfix grpelem" id="u78-4"><!-- content -->
+     <p>*********** output above this line***********</p>
+    </div>
+    <div class="grpelem" id="u283"><!-- custom html -->
+     <table width="380" border="1" align="center">
+<td width="380" height="40"><?php echo $outputtext; ?>
 </table>
-<p class="header_02"><span class="header_02top">***********************<span class="description">status messages  in orange</span>************************</span></p>
-<p>Video Playback Control:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="?action=stop"><img src="pics/stop.png" width="190" height="40" alt="STOP" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">stop the video player before doing any other action</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=startmaster"><img src="pics/start.png" width="190" height="40" alt="START" /></a></td>
-    <td width="190" height="40" class="description"><div align="left">may take a while, dont hit it more than ones!</div></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=startslave"><img src="pics/start_slave.png" width="190" height="40" alt="START_slave" /></a></td>
-    <td width="190" height="40" class="description"><div align="left">may take a while, dont hit it more than ones!</div></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=startusb"><img src="pics/start_usb.png" width="190" height="40" alt="START_usb" /></a></td>
-    <td width="190" height="40" class="description"><div align="left">may take a while, dont hit it more than ones!</div></td>
-  </tr>
-</table>
-<p>Image Playback Control:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="?action=stopimage"><img src="pics/stopimage.png" width="190" height="40" alt="stop image viewer" /></a></td>
-    <td width="190" height="40" class="description"><div align="left">stops the image viewer</div></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=image"><img src="pics/start_image.png" width="190" height="40" alt="imageplayer" /></a></td>
-    <td height="40" class="description"><div align="left">starts the image viewer (plays all .jpg image files from internal storage) within 5sec.</div></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=imageusb"><img src="pics/start_imageusb.png" width="190" height="40" alt="imageplayer from usb" /></a></td>
-    <td height="40" class="description"><div align="left">starts the image viewer (plays all .jpg image files from usb storage) within 5sec.</div></td>
-  </tr>
-</table>
-<p>Audio Playback Control:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="?action=stop"><img src="pics/stopaudio.png" width="190" height="40" alt="stop" /></a></td>
-    <td width="190" height="40" class="description"><div align="left">stops the audio player</div></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=audio"><img src="pics/startaudio.png" width="190" height="40" alt="audio start" /></a></td>
-    <td height="40" class="description"><div align="left">starts the audio player (plays all .mp3  files from internal storage)</div></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=audiousb"><img src="pics/startaudiousb.png" width="190" height="40" alt="start audio usb" /></a></td>
-    <td height="40" class="description"><div align="left">starts the audio player (plays all .mp3 files from usb storage)</div></td>
-  </tr>
-</table>
-<p>Settings for Display:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="/eXtplorer/index.php" target="new"><img src="pics/open.png" width="190" height="40" alt="OPEN_filebrowser" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">open filebrowser in a new tab</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=clean"><img src="pics/clean.png" width="190" height="40" alt="CLEAN" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">remove unwanted hidden files</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=eject"><img src="pics/eject.png" width="190" height="40" alt="EJECT" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">eject the usb stick, if you forget it will not be readable on your computer!</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=mount"><img src="pics/mount.png" width="190" height="40" alt="MOUNT" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">mount usb stick</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=reboot"><img src="pics/reboot.png" width="190" height="40" alt="REBOOT" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">reboot</p></td>
-  </tr>
-</table>
-<p>Settings for Display:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td height="40"><a href="?action=getresolution"><img src="pics/resolution.png" width="190" height="40" alt="RESOLUTION" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">get the actual resolution of connected display / projector</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=screenon"><img src="pics/screen_on.png" width="190" height="40" alt="screen on" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">wake up connected screen with preferred settings (CEC)</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=screenoff"><img src="pics/screen_off.png" width="190" height="40" alt="screen off" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">put the connected screen to power sleep (CEC)</p></td>
-  </tr>
-</table>
-<p>Movie Information:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="?action=codecinfo"><img src="pics/codecinfo.png" width="190" height="40" alt="MASTER" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">get infos of movies on internal storage: Name Format Codec Bitrate</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=movieinfo"><img src="pics/movieresolution.png" width="190" height="40" alt="update" /></a></td>
-    <td height="40" class="description"><p align="left">get movie resolution</p></td>
-  </tr>
-</table>
-<p>Settings for Audio:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="192" height="40"><a href="?action=volume_up"><img src="pics/volume_up.png" width="95" height="40" alt="Volume up" /></a><a href="?action=volume_down"><img src="pics/volume_down.png" width="95" height="40" alt="Volume down" /></a></td>
-    <td height="40" class="description"><p align="left">change the volume settings</p></td>
-  </tr>
-  <tr>
-    <td width="192" height="40"><a href="?action=hdmi_out"><img src="pics/audio_hdmi.png" width="63" height="40" alt="hdmi" /></a><a href="?action=jack_out"><img src="pics/audio_jack.png" width="70" height="40" alt="jack" /></a><a href="?action=both_out"><img src="pics/audio_both.png" width="57" height="40" alt="both" /></a></td>
-    <td height="40" class="description"><p align="left">change audio output </p>
-    <p align="left">needs reboot</p></td>
-  </tr>
-</table>
-<p>Settings for Boot/Autostart:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="?action=master"><img src="pics/setmaster.png" width="190" height="40" alt="MASTER" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set to autostart as master (video)</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=slave"><img src="pics/setslave.png" width="190" height="40" alt="SLAVE" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set to autostart as slave (video)</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=extension1"><img src="pics/extension1.png" width="190" height="40" alt="EXT1" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to extension1</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=usb"><img src="pics/setusb.png" width="190" height="40" alt="USB" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to usb disk mode, there must be a usb stick attached at boot! (video)</p></td>
-  </tr>
-  <tr>
-    <td height="40">&nbsp;</td>
-    <td height="40" class="description">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=setimage"><img src="pics/setimage.png" width="190" height="40" alt="set image player" /></a></td>
-    <td height="40" class="description"><p align="left">set autostart to image viewer, plays all .jpg images from intern memory</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=setimageusb"><img src="pics/setimageusb.png" width="190" height="40" alt="set usb image player" /></a></td>
-    <td height="40" class="description"><p align="left">set autostart to image viewer from usb, plays all .jpg images from usb(stick must be present on boot!)</p></td>
-  </tr>
-  <tr>
-    <td height="40">&nbsp;</td>
-    <td height="40" class="description">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=setaudio"><img src="pics/setaudio.png" width="190" height="40" alt="set to audio" /></a></td>
-    <td height="40" class="description">set autostart to audio player</td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=setaudiousb"><img src="pics/setaudiousb.png" width="190" height="40" alt="set audio usb" /></a></td>
-    <td height="40" class="description">set autostart to audio player usb</td>
-  </tr>
-</table>
-<p>Settings for Screen Resolution:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td height="40"><a href="?action=hdmireset"><img src="pics/hdmireset.png" width="190" height="40" alt="hadmi reset" /></a></td>
-    <td height="40" class="description">reset to default settings</td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=hdmi5"><img src="pics/hdmi5.png" width="190" height="40" alt="force full HD" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to force output for TV HDMI 1080i 60Hz</p></td>
-  </tr>
-  <tr>
-    <td width="190" height="40"><a href="?action=hdmi4"><img src="pics/hdmi4.png" width="190" height="40" alt="HDMI4" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">set autostart to force output for TV HDMI 720p 60Hz</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=hdmi1"><img src="pics/hdmi1.png" width="190" height="40" alt="HDMI1" /></a></td>
-    <td height="40" class="description"><p align="left">set autostart to force HDMI to VGA Adaptor</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=forcevga"><img src="pics/forcevga.png" width="190" height="40" alt="force vga" /></a></td>
-    <td height="40" class="description">set autostart to use HDMI to VGA adaptor with a resolution of 800x600</td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=bootconf"><img src="pics/bootconf.png" width="190" height="40" alt="boot conf custom" /></a></td>
-    <td height="40" class="description">copy custom conf.txt from internal storage to bootloader, see manual! can help with display issues</td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=bootconfusb"><img src="pics/bootconf.png" width="190" height="40" alt="boot conf custom" /></a></td>
-    <td height="40" class="description">copy custom conf.txt from USB storage to bootloader, see manual! can help with display issues</td>
-  </tr>
-</table>
-<p>Settings for Firmware/System:</p>
-<table width="380" border="0" align="center" cellspacing="4">
-  <tr>
-    <td width="190" height="40"><a href="?action=syncreset"><img src="pics/sync-reset.png" width="190" height="40" alt="sync reset" /></a></td>
-    <td width="190" height="40" class="description"><p align="left">Reset Sync-script to original settings (can help if player not running)</p></td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=controlpanel"><img src="pics/cp_upgrade.png" width="190" height="40" alt="update" /></a></td>
-    <td height="40" class="description">Update to new ControlPanel from USB</td>
-  </tr>
-  <tr>
-    <td height="40"><a href="?action=firmware"><img src="pics/firmware_update.png" width="190" height="40" alt="MASTER" /></a></td>
-    <td height="40" class="description"><p align="left">Upgrade to new Firmware from USB Stick</p></td>
-  </tr>
-  <tr>
-    <td height="40">coming...</td>
-    <td height="40" class="description">Install depencies. Only do this if upgrading from older CP and some functions dont work (e.g.codec info)</td>
-  </tr>
-</table>
-<p><span class="header_02top">***************************************************************</span></p>
-<p class="header_02"><span class="header_02top">!! read the manual on www.pocketvj.com !!</span></p>
-<p class="header_02"><span class="header_02top">©2014 by magdesign.ch</span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-</body>
+</div>
+    <div class="TabbedPanelsWidget clearfix grpelem" id="tab-panelu119"><!-- vertical box -->
+     <div class="TabbedPanelsTabGroup clearfix colelem" id="u133"><!-- horizontal box -->
+      <div class="TabbedPanelsTab clearfix grpelem" id="u306"><!-- vertical box -->
+       <div class=" NoWrap clearfix colelem" id="u308-6"><!-- content -->
+        <p>Playback</p>
+        <p>Control</p>
+       </div>
+      </div>
+      <div class="TabbedPanelsTab clearfix grpelem" id="u301"><!-- vertical box -->
+       <div class=" NoWrap clearfix colelem" id="u304-6"><!-- content -->
+        <p>File</p>
+        <p>Handling</p>
+       </div>
+      </div>
+      <div class="TabbedPanelsTab clearfix grpelem" id="u296"><!-- vertical box -->
+       <div class=" NoWrap clearfix colelem" id="u299-4"><!-- content -->
+        <p>Display</p>
+       </div>
+      </div>
+      <div class="TabbedPanelsTab clearfix grpelem" id="u285"><!-- vertical box -->
+       <div class=" NoWrap clearfix colelem" id="u287-6"><!-- content -->
+        <p>Info</p>
+        <p>Audio</p>
+       </div>
+      </div>
+      <div class="TabbedPanelsTab clearfix grpelem" id="u171"><!-- vertical box -->
+       <div class=" NoWrap clearfix colelem" id="u173-6"><!-- content -->
+        <p>Boot</p>
+        <p>Autostart</p>
+       </div>
+      </div>
+      <div class="TabbedPanelsTab clearfix grpelem" id="u134"><!-- vertical box -->
+       <div class=" NoWrap clearfix colelem" id="u135-6"><!-- content -->
+        <p>Firmware</p>
+        <p>System</p>
+       </div>
+      </div>
+     </div>
+     <div class="TabbedPanelsContentGroup clearfix colelem" id="u120"><!-- stack box -->
+      <div class="TabbedPanelsContent clearfix grpelem" id="u310"><!-- column -->
+       <div class="clearfix colelem" id="u503-4"><!-- content -->
+        <p>Video Playback Control:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u491" href="?action=stop"><!-- image --><img class="block" id="u491_img" src="images/01_stop.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u493" href="?action=startmaster"><!-- image --><img class="block" id="u493_img" src="images/02_playloop.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u495" href="?action=startmasteronce"><!-- image --><img class="block" id="u495_img" src="images/02_playonce.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u497" href="?action=startusb"><!-- image --><img class="block" id="u497_img" src="images/03_playusb.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u499" href="?action=startslave"><!-- image --><img class="block" id="u499_img" src="images/04_playslave.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="u1121-4"><!-- content -->
+        <p>Image Playback Control:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u1115" href="?action=stopimage"><!-- image --><img class="block" id="u1115_img" src="images/01_stop.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="ppu1119"><!-- group -->
+        <div class="clearfix grpelem" id="pu1119"><!-- column -->
+         <a class="nonblock nontext clip_frame colelem" id="u1119" href="?action=image"><!-- image --><img class="block" id="u1119_img" src="images/05_playimage.jpg" alt="" width="160" height="40"/></a>
+         <a class="nonblock nontext clip_frame colelem" id="u1117" href="?action=imageusb"><!-- image --><img class="block" id="u1117_img" src="images/06_playimageusb.jpg" alt="" width="160" height="40"/></a>
+        </div>
+        <div class="clearfix grpelem" id="u1114-4"><!-- content -->
+         <p>Supports only *.jpg files</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="u505-4"><!-- content -->
+        <p>Audio Playback Control:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u512" href="?action=stop"><!-- image --><img class="block" id="u512_img" src="images/01_stop.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="ppu514"><!-- group -->
+        <div class="clearfix grpelem" id="pu514"><!-- column -->
+         <a class="nonblock nontext clip_frame colelem" id="u514" href="?action=audio"><!-- image --><img class="block" id="u514_img" src="images/07_playaudio.jpg" alt="" width="160" height="40"/></a>
+         <a class="nonblock nontext clip_frame colelem" id="u516" href="?action=audiousb"><!-- image --><img class="block" id="u516_img" src="images/08_playaudiousb.jpg" alt="" width="160" height="40"/></a>
+        </div>
+        <div class="clearfix grpelem" id="u507-4"><!-- content -->
+         <p>Supports only *.mp3 files</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="u804-4"><!-- content -->
+        <p>Audio Output Selection:</p>
+       </div>
+       <div class="clearfix colelem" id="pu1623"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1623" href="?action=hdmi_out"><!-- image --><img class="block" id="u1623_img" src="images/23_audioout1.jpg" alt="" width="51" height="40"/></a>
+        <a class="nonblock nontext clip_frame grpelem" id="u1626" href="?action=jack_out"><!-- image --><img class="block" id="u1626_img" src="images/23_audioout2.jpg" alt="" width="68" height="40"/></a>
+        <a class="nonblock nontext clip_frame grpelem" id="u1629" href="?action=both_out"><!-- image --><img class="block" id="u1629_img" src="images/23_audioout3.jpg" alt="" width="41" height="40"/></a>
+        <div class="clearfix grpelem" id="u832-4"><!-- content -->
+         <p>works for video and audio player</p>
+        </div>
+       </div>
+      </div>
+      <div class="TabbedPanelsContent invi clearfix grpelem" id="u305"><!-- column -->
+       <div class="clearfix colelem" id="u1141-4"><!-- content -->
+        <p>File Management:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u1131" href="/eXtplorer/index.php" target="_blank"><!-- image --><img class="block" id="u1131_img" src="images/09_filebrowser.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1133" href="?action=clean"><!-- image --><img class="block" id="u1133_img" src="images/10_clean.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1135" href="?action=eject"><!-- image --><img class="block" id="u1135_img" src="images/11_eject.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1137" href="?action=mount"><!-- image --><img class="block" id="u1137_img" src="images/12_mount.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1139" href="?action=reboot"><!-- image --><img class="block" id="u1139_img" src="images/13_reboot.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="u1674-13"><!-- content -->
+        <p>Note:</p>
+        <p>&nbsp;</p>
+        <p>Make sure your file names don't contain special characters, empty spaces, and very long names,&nbsp; e.g.:</p>
+        <p>&nbsp;</p>
+        <p>this video File % &quot;2014&quot;.mp4 =&gt; will not work</p>
+        <p>&nbsp;</p>
+        <p>this_video_2014.mp4 =&gt; will work</p>
+       </div>
+      </div>
+      <div class="TabbedPanelsContent invi clearfix grpelem" id="u300"><!-- column -->
+       <div class="clearfix colelem" id="u587-4"><!-- content -->
+        <p>Display Settings:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u589" href="?action=screenon"><!-- image --><img class="block" id="u589_img" src="images/15_wakeup.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u595" href="?action=screenoff"><!-- image --><img class="block" id="u595_img" src="images/16_sleep.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u616" href="?action=getresolution"><!-- image --><img class="block" id="u616_img" src="images/14_resolution.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="u619-4"><!-- content -->
+        <p>Display Boot Settings:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u623" href="?action=hdmireset"><!-- image --><img class="block" id="u623_img" src="images/17_screendefault.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u629" href="?action=hdmi5"><!-- image --><img class="block" id="u629_img" src="images/18_screen1080i.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u733" href="?action=hdmi4"><!-- image --><img class="block" id="u733_img" src="images/19_screen720p.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="pu739"><!-- group -->
+        <div class="clip_frame grpelem" id="u739"><!-- image -->
+         <img class="block" id="u739_img" src="images/19_screencust.jpg" alt="" width="160" height="40"/>
+        </div>
+        <div class="clearfix grpelem" id="u772-6"><!-- content -->
+         <p>Free</p>
+         <p>for customer related Output</p>
+        </div>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u745" href="?action=hdmi1"><!-- image --><img class="block" id="u745_img" src="images/20_screenvga1.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u751" href="?action=forcevga"><!-- image --><img class="block" id="u751_img" src="images/20_screenvga2.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="ppu757"><!-- group -->
+        <div class="clearfix grpelem" id="pu757"><!-- column -->
+         <a class="nonblock nontext clip_frame colelem" id="u757" href="?action=bootconf"><!-- image --><img class="block" id="u757_img" src="images/21_scustomreso1.jpg" alt="" width="160" height="40"/></a>
+         <a class="nonblock nontext clip_frame colelem" id="u763" href="?action=bootconfusb"><!-- image --><img class="block" id="u763_img" src="images/21_scustomreso2.jpg" alt="" width="160" height="40"/></a>
+        </div>
+        <div class="clearfix grpelem" id="u769-4"><!-- content -->
+         <p>Read the manual for more info !</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="pu607"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u607" href="?action=reboot"><!-- image --><img class="block" id="u607_img" src="images/13_reboot.jpg" alt="" width="160" height="40"/></a>
+        <div class="clearfix grpelem" id="u770-4"><!-- content -->
+         <p>Settings take effect after reboot</p>
+        </div>
+       </div>
+      </div>
+      <div class="TabbedPanelsContent invi clearfix grpelem" id="u289"><!-- column -->
+       <div class="clearfix colelem" id="u785-4"><!-- content -->
+        <p>Movie Info:</p>
+       </div>
+       <div class="clip_frame colelem" id="u773"><!-- image -->
+        <img class="block" id="u773_img" src="images/22_codecinfo.jpg" alt="" width="160" height="40"/>
+       </div>
+       <div class="clip_frame colelem" id="u779"><!-- image -->
+        <img class="block" id="u779_img" src="images/22_resoinfo.jpg" alt="" width="160" height="40"/>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u610" href="?action=getresolution"><!-- image --><img class="block" id="u610_img" src="images/14_resolution.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix colelem" id="pu1740"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1740" href="?action=testscreen"><!-- image --><img class="block" id="u1740_img" src="images/14_testscreenon.jpg" alt="" width="116" height="40"/></a>
+        <a class="nonblock nontext clip_frame grpelem" id="u1746" href="?action=testscreenoff"><!-- image --><img class="block" id="u1746_img" src="images/14_testscreenoff.jpg" alt="" width="44" height="40"/></a>
+       </div>
+       <div class="clearfix colelem" id="u796-4"><!-- content -->
+        <p>Volume Settings:</p>
+       </div>
+       <div class="clearfix colelem" id="pu848"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u848" href="?action=volume_up"><!-- image --><img class="block" id="u848_img" src="images/23_volumeplus.jpg" alt="" width="80" height="40"/></a>
+        <a class="nonblock nontext clip_frame grpelem" id="u842" href="?action=volume_down"><!-- image --><img class="block" id="u842_img" src="images/23_volumeminus.jpg" alt="" width="80" height="40"/></a>
+       </div>
+       <div class="clearfix colelem" id="u800-4"><!-- content -->
+        <p>Audio Output Selection::</p>
+       </div>
+       <div class="clearfix colelem" id="pu1635"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1635" href="?action=hdmi_out"><!-- image --><img class="block" id="u1635_img" src="images/23_audioout1.jpg" alt="" width="51" height="40"/></a>
+        <a class="nonblock nontext clip_frame grpelem" id="u1637" href="?action=jack_out"><!-- image --><img class="block" id="u1637_img" src="images/23_audioout2.jpg" alt="" width="68" height="40"/></a>
+        <a class="nonblock nontext clip_frame grpelem" id="u1639" href="?action=both_out"><!-- image --><img class="block" id="u1639_img" src="images/23_audioout3.jpg" alt="" width="41" height="40"/></a>
+        <div class="clearfix grpelem" id="u1634-4"><!-- content -->
+         <p>works for video and audio player</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="u1166-4"><!-- content -->
+        <p>Projector Info:</p>
+       </div>
+       <div class="clearfix colelem" id="pu1189"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1189" href="http://192.168.2.254" target="_blank"><!-- image --><img class="block" id="u1189_img" src="images/24_projector.jpg" alt="" width="160" height="40"/></a>
+        <div class="clearfix grpelem" id="u1644-4"><!-- content -->
+         <p>configure the IP of your projector to: 192.168.2.254</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="u1170-4"><!-- content -->
+        <p>Temperature Info:</p>
+       </div>
+       <div class="clearfix colelem" id="ppu1174"><!-- group -->
+        <div class="clearfix grpelem" id="pu1174"><!-- column -->
+         <div class="clip_frame colelem" id="u1174"><!-- image -->
+          <img class="block" id="u1174_img" src="images/24_temperature.jpg" alt="" width="160" height="40"/>
+         </div>
+         <div class="clip_frame colelem" id="u1180"><!-- image -->
+          <img class="block" id="u1180_img" src="images/24_humidity.jpg" alt="" width="160" height="40"/>
+         </div>
+        </div>
+        <div class="clearfix grpelem" id="u1702-4"><!-- content -->
+         <p>for this function please attach PocketVJ temperature modul</p>
+        </div>
+       </div>
+      </div>
+      <div class="TabbedPanelsContent invi clearfix grpelem" id="u175"><!-- column -->
+       <div class="clearfix colelem" id="u854-4"><!-- content -->
+        <p>Boot Settings:</p>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u1247" href="?action=master"><!-- image --><img class="block" id="u1247_img" src="images/25_setmaster.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1253" href="?action=usb"><!-- image --><img class="block" id="u1253_img" src="images/25_setmasterusb.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1259" href="?action=slave"><!-- image --><img class="block" id="u1259_img" src="images/25_setslave.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1229" href="?action=extension1"><!-- image --><img class="block" id="u1229_img" src="images/25_setexten1.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1235" href="?action=setimage"><!-- image --><img class="block" id="u1235_img" src="images/25_setimage.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1241" href="?action=setimageusb"><!-- image --><img class="block" id="u1241_img" src="images/25_setimageusb.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1199" href="?action=setaudio"><!-- image --><img class="block" id="u1199_img" src="images/25_audio.jpg" alt="" width="160" height="40"/></a>
+       <a class="nonblock nontext clip_frame colelem" id="u1223" href="?action=setaudiousb"><!-- image --><img class="block" id="u1223_img" src="images/25_setaudiousb.jpg" alt="" width="160" height="40"/></a>
+      </div>
+      <div class="TabbedPanelsContent invi clearfix grpelem" id="u121"><!-- column -->
+       <div class="clearfix colelem" id="u855-4"><!-- content -->
+        <p>System Settings:</p>
+       </div>
+       <div class="clearfix colelem" id="pu1271"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1271" href="?action=controlpanel"><!-- image --><img class="block" id="u1271_img" src="images/26_cpupdate.jpg" alt="" width="160" height="40"/></a>
+        <div class="clearfix grpelem" id="u1301-4"><!-- content -->
+         <p>Make sure all files are on USB Stick</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="pu1725"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1725" href="?action=controlpanelintern"><!-- image --><img class="block" id="u1725_img" src="images/26_cpupdateint.jpg" alt="" width="160" height="40"/></a>
+        <div class="clearfix grpelem" id="u1731-4"><!-- content -->
+         <p>Copy www folder to internal storage</p>
+        </div>
+       </div>
+       <div class="clearfix colelem" id="pu1733"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1733" href="?action=factoryreset"><!-- image --><img class="block" id="u1733_img" src="images/26_factorypreset.jpg" alt="" width="160" height="40"/></a>
+        <div class="clearfix grpelem" id="u1302-4"><!-- content -->
+         <p>Hit this once after every upgrade</p>
+        </div>
+       </div>
+       <a class="nonblock nontext clip_frame colelem" id="u1703" href="?action=reboot"><!-- image --><img class="block" id="u1703_img" src="images/13_reboot.jpg" alt="" width="160" height="40"/></a>
+       <div class="clip_frame colelem" id="u1283"><!-- image -->
+        <img class="block" id="u1283_img" src="images/27_depencies.jpg" alt="" width="160" height="40"/>
+       </div>
+       <div class="clearfix colelem" id="pu1289"><!-- group -->
+        <a class="nonblock nontext clip_frame grpelem" id="u1289" href="?action=firmware"><!-- image --><img class="block" id="u1289_img" src="images/27_firmware.jpg" alt="" width="160" height="40"/></a>
+        <div class="clearfix grpelem" id="u1303-4"><!-- content -->
+         <p>this is only needed if the sync&#45;script gets adjusted</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="clearfix pinned-colelem" id="u771-6"><!-- content -->
+    <p>Copyright by magdesign.ch</p>
+    <p>©2015</p>
+   </div>
+   <div class="verticalspacer"></div>
+  </div>
+  <!-- JS includes -->
+  <script type="text/javascript">
+   if (document.location.protocol != 'https:') document.write('\x3Cscript src="http://musecdn2.businesscatalyst.com/scripts/4.0/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
+</script>
+  <script type="text/javascript">
+   window.jQuery || document.write('\x3Cscript src="scripts/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
+</script>
+  <script src="scripts/museutils.js?3777594392" type="text/javascript"></script>
+  <script src="scripts/webpro.js?474087315" type="text/javascript"></script>
+  <script src="scripts/musewpdisclosure.js?3952359668" type="text/javascript"></script>
+  <script src="scripts/jquery.watch.js?4144919381" type="text/javascript"></script>
+  <!-- Other scripts -->
+  <script type="text/javascript">
+   $(document).ready(function() { try {
+(function(){var a={},b=function(a){if(a.match(/^rgb/))return a=a.replace(/\s+/g,"").match(/([\d\,]+)/gi)[0].split(","),(parseInt(a[0])<<16)+(parseInt(a[1])<<8)+parseInt(a[2]);if(a.match(/^\#/))return parseInt(a.substr(1),16);return 0};(function(){$('link[type="text/css"]').each(function(){var b=($(this).attr("href")||"").match(/\/?css\/([\w\-]+\.css)\?(\d+)/);b&&b[1]&&b[2]&&(a[b[1]]=b[2])})})();(function(){$("body").append('<div class="version" style="display:none; width:1px; height:1px;"></div>');
+for(var c=$(".version"),d=0;d<Muse.assets.required.length;){var f=Muse.assets.required[d],g=f.match(/([\w\-\.]+)\.(\w+)$/),k=g&&g[1]?g[1]:null,g=g&&g[2]?g[2]:null;switch(g.toLowerCase()){case "css":k=k.replace(/\W/gi,"_").replace(/^([^a-z])/gi,"_$1");c.addClass(k);var g=b(c.css("color")),h=b(c.css("background-color"));g!=0||h!=0?(Muse.assets.required.splice(d,1),"undefined"!=typeof a[f]&&(g!=a[f]>>>24||h!=(a[f]&16777215))&&Muse.assets.outOfDate.push(f)):d++;c.removeClass(k);break;case "js":k.match(/^jquery-[\d\.]+/gi)&&
+typeof $!="undefined"?Muse.assets.required.splice(d,1):d++;break;default:throw Error("Unsupported file type: "+g);}}c.remove();if(Muse.assets.outOfDate.length||Muse.assets.required.length)c="Some files on the server may be missing or incorrect. Clear browser cache and try again. If the problem persists please contact website author.",(d=location&&location.search&&location.search.match&&location.search.match(/muse_debug/gi))&&Muse.assets.outOfDate.length&&(c+="\nOut of date: "+Muse.assets.outOfDate.join(",")),d&&Muse.assets.required.length&&(c+="\nMissing: "+Muse.assets.required.join(",")),alert(c)})()})();
+/* body */
+Muse.Utils.transformMarkupToFixBrowserProblemsPreInit();/* body */
+Muse.Utils.prepHyperlinks(true);/* body */
+Muse.Utils.initWidget('#tab-panelu119', function(elem) { return new WebPro.Widget.TabbedPanels(elem, {event:'click',defaultIndex:0}); });/* #tab-panelu119 */
+Muse.Utils.fullPage('#page');/* 100% height page */
+Muse.Utils.showWidgetsWhenReady();/* body */
+Muse.Utils.transformMarkupToFixBrowserProblems();/* body */
+} catch(e) { if (e && 'function' == typeof e.notify) e.notify(); else Muse.Assert.fail('Error calling selector function:' + e); }});
+</script>
+   </body>
 </html>
