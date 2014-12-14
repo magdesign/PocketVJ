@@ -6,6 +6,18 @@
 	position: relative;
 }
 
+#u1824
+{
+	border-style: none;
+	border-color: transparent;
+	background-color: transparent;
+	color: #F7931E;
+	font-size: 14px;
+	line-height: 17px;
+	font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
+	position: relative;
+}
+
 #u78-4
 {
 	background-color: transparent;
@@ -14,28 +26,5 @@
 	text-align: center;
 	font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
 	position: relative;
-}
-
-#u283
-{
-	border-style: none;
-	border-color: transparent;
-	background-color: transparent;
-	color: #F7931E;
-	font-size: 10px;
-	line-height: 12px;
-	font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
-	font-weight: bold;
-	position: relative;
-}
-
-#u771-6
-{
-	background-color: transparent;
-	line-height: 14px;
-	font-size: 12px;
-	text-align: center;
-	font-family: Helvetica, Helvetica Neue, Arial, sans-serif;
-	position: fixed;
 }
 
