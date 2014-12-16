@@ -1,0 +1,4 @@
+mount /dev/sda1 /media/usb
+cat /etc/motd; sleep 3
+su -s /bin/bash -c startx pi&
+exit 0

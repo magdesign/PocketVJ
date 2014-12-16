@@ -280,8 +280,13 @@ if ($_GET['action'] == 'both_out') {
 	$outputtext =  "Audio set to both";
 }
 
+if ($_GET['action'] == 'screenshare') {
+	$outputtext =  "set to screenshare mode";
+	system("sudo cp /var/www/sync/rc.local.screenshare /etc/rc.local");
+}
 
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html class="html" lang="en-GB">
  <head>
 
@@ -295,8 +300,8 @@ if ($_GET['action'] == 'both_out') {
   <title>ControlPanel</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="css/site_global.css?365011649"/>
-  <link rel="stylesheet" type="text/css" href="css/master_a-master.css?3819210521"/>
-  <link rel="stylesheet" type="text/css" href="css/index.css?3809302334" id="pagesheet"/>
+  <link rel="stylesheet" type="text/css" href="css/master_a-master.css?4251176170"/>
+  <link rel="stylesheet" type="text/css" href="css/index.css?441246411" id="pagesheet"/>
   <!-- Other scripts -->
   <script type="text/javascript">
    document.documentElement.className += ' js';
@@ -306,7 +311,7 @@ if ($_GET['action'] == 'both_out') {
 
   <div class="clearfix" id="page"><!-- column -->
    <div class="clearfix colelem" id="u75-4"><!-- content -->
-    <p>PocketVJ Control Panel v0.2</p>
+    <p>PocketVJ Control Panel v0.21</p>
    </div>
    <div class="colelem" id="u1824"><!-- custom html -->
     <table width="380" border="1" align="center">
@@ -532,6 +537,14 @@ if ($_GET['action'] == 'both_out') {
       <a class="nonblock nontext clip_frame colelem" id="u1241" href="?action=setimageusb"><!-- image --><img class="block" id="u1241_img" src="images/25_setimageusb.jpg" alt="" width="160" height="40"/></a>
       <a class="nonblock nontext clip_frame colelem" id="u1199" href="?action=setaudio"><!-- image --><img class="block" id="u1199_img" src="images/25_audio.jpg" alt="" width="160" height="40"/></a>
       <a class="nonblock nontext clip_frame colelem" id="u1223" href="?action=setaudiousb"><!-- image --><img class="block" id="u1223_img" src="images/25_setaudiousb.jpg" alt="" width="160" height="40"/></a>
+      <div class="clearfix colelem" id="pu1878"><!-- group -->
+       <a class="nonblock nontext clip_frame grpelem" id="u1878" href="?action=screenshare"><!-- image --><img class="block" id="u1878_img" src="images/25_setsharing.jpg" alt="" width="160" height="40"/></a>
+       <div class="clearfix grpelem" id="u1892-6"><!-- content -->
+        <p>Read the manual</p>
+        <p>for this feature!</p>
+       </div>
+      </div>
+      <a class="nonblock nontext clip_frame colelem" id="u1867" href="?action=reboot"><!-- image --><img class="block" id="u1867_img" src="images/13_reboot.jpg" alt="" width="160" height="40"/></a>
      </div>
      <div class="TabbedPanelsContent invi clearfix grpelem" id="u121"><!-- column -->
       <div class="clearfix colelem" id="u855-4"><!-- content -->
