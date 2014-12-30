@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo fbi -T 1 -noverbose -a /var/www/sync/testscreen.png &
+sudo fbi -T 1 -noverbose /var/www/sync/testscreen.png &
