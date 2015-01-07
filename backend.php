@@ -1,5 +1,7 @@
 <?php
 
+
+
 if ($_GET['action'] == 'stop') {
 	$outputtext =  "player stopped";
 	system("sudo /var/www/sync/omxkill.py");
@@ -240,6 +242,12 @@ if ($_GET['action'] == 'factoryreset') {
     system("sudo cp /var/www/sync/defaulthdmi /boot/config.txt");
     system("sudo cp /var/www/sync/rc.local.master /etc/rc.local"); 
 	system("sudo chmod 755 -R /var/www");
+}
+
+if ($_GET['action'] == 'removeold') {
+	$outputtext =  "old cp removed";
+	system("sudo rm /var/www/index.php");
+
 }
 
 
