@@ -14,10 +14,66 @@ if ($_GET['action'] == 'startmaster') {
 	$outputtext = "start player as master";
 }
 
+if ($_GET['action'] == 'startmaster01') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmaster01.py");
+	$outputtext = "start video 01 loop";
+}
+
+if ($_GET['action'] == 'startmaster02') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmaster02.py");
+	$outputtext = "start video 02 loop";
+}
+
+if ($_GET['action'] == 'startmaster03') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmaster03.py");
+	$outputtext = "start video 03 loop";
+}
+
+if ($_GET['action'] == 'startmaster04') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmaster04.py");
+	$outputtext = "start video 04 loop";
+}
+
+if ($_GET['action'] == 'startmaster05') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmaster05.py");
+	$outputtext = "start video 05 loop";
+}
+
+if ($_GET['action'] == 'startmaster06') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmaster06.py");
+	$outputtext = "start video 06 loop";
+}
+
+
+
 if ($_GET['action'] == 'startmasteronce') {
 	exec("sudo /var/www/sync/omxkill.py");
 	exec("sudo /var/www/sync/startmasterone.py");
 	$outputtext = "start player as master once";
+}
+
+if ($_GET['action'] == 'startmasteronce01') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmasterone01.py");
+	$outputtext = "start video 01 once";
+}
+
+if ($_GET['action'] == 'startmasteronce02') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmasterone02.py");
+	$outputtext = "start video 02 once";
+}
+
+if ($_GET['action'] == 'startmasteronce03') {
+	exec("sudo /var/www/sync/omxkill.py");
+	exec("sudo /var/www/sync/startmasterone03.py");
+	$outputtext = "start video 03 once";
 }
 
 
@@ -173,6 +229,7 @@ if ($_GET['action'] == 'hdmivga') {
 if ($_GET['action'] == 'clean') {
 	$outputtext =  "clean hidden files";
 	system("sudo rm -R /media/internal/.[DTf_]*");
+	system("sudo rm -R /media/internal/__MACOSX");
 }
 
 if ($_GET['action'] == 'getresolution') {
@@ -234,7 +291,16 @@ if ($_GET['action'] == 'controlpanelintern') {
 	$outputtext =  "update ControlPanel internal";
 	system("sudo cp -r /media/internal/www/* /var/www");
 	system("sudo chmod 755 -R /var/www");
+	system("sudo rm -r /media/internal/www");
 }
+
+if ($_GET['action'] == 'depencies1') {
+	$outputtext =  "update depencies1 exFAT+HFS";
+	system("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/depencies1.py &");
+
+}
+
 
 if ($_GET['action'] == 'factoryreset') {
 	$outputtext =  "factory reset system";
