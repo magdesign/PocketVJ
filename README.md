@@ -2,7 +2,7 @@
 ========
 
 PocketVJ Control Panel
-
+http://www.pocketvj.com
 
 This file is used to control the PocketVJ over the webbrowser.
 
