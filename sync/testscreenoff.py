@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo sudo killall fbi &
+sudo killall fbi &

@@ -10,42 +10,49 @@ if ($_GET['action'] == 'stop') {
 
 if ($_GET['action'] == 'startmaster') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster.py");
 	$outputtext = "start player as master";
 }
 
 if ($_GET['action'] == 'startmaster01') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster01.py");
 	$outputtext = "start video 01 loop";
 }
 
 if ($_GET['action'] == 'startmaster02') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster02.py");
 	$outputtext = "start video 02 loop";
 }
 
 if ($_GET['action'] == 'startmaster03') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster03.py");
 	$outputtext = "start video 03 loop";
 }
 
 if ($_GET['action'] == 'startmaster04') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster04.py");
 	$outputtext = "start video 04 loop";
 }
 
 if ($_GET['action'] == 'startmaster05') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster05.py");
 	$outputtext = "start video 05 loop";
 }
 
 if ($_GET['action'] == 'startmaster06') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmaster06.py");
 	$outputtext = "start video 06 loop";
 }
@@ -54,24 +61,28 @@ if ($_GET['action'] == 'startmaster06') {
 
 if ($_GET['action'] == 'startmasteronce') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmasterone.py");
 	$outputtext = "start player as master once";
 }
 
 if ($_GET['action'] == 'startmasteronce01') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmasterone01.py");
 	$outputtext = "start video 01 once";
 }
 
 if ($_GET['action'] == 'startmasteronce02') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmasterone02.py");
 	$outputtext = "start video 02 once";
 }
 
 if ($_GET['action'] == 'startmasteronce03') {
 	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmasterone03.py");
 	$outputtext = "start video 03 once";
 }
@@ -79,12 +90,14 @@ if ($_GET['action'] == 'startmasteronce03') {
 
 if ($_GET['action'] == 'startslave') {
        exec("sudo /var/www/sync/omxkill.py");
+       system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startslave.py");
 	$outputtext =  "start player as slave";
 }
 
 if ($_GET['action'] == 'startusb') {
        exec("sudo /var/www/sync/omxkill.py");
+       system("sudo /var/www/sync/testscreenoff.py &");
 	exec("sudo /var/www/sync/startmasterusb.py");
 	$outputtext =  "start player in usb mode";	
 }
@@ -97,12 +110,14 @@ if ($_GET['action'] == 'stopimage') {
 if ($_GET['action'] == 'image') {
 	$outputtext =  "start image player";
 	system("sudo killall fbi");
+	system("sudo /var/www/sync/omxkill.py");
 	system("sudo /var/www/sync/startimage.py > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'imageusb') {
 	$outputtext =  "start image player from usb";
 	system("sudo killall fbi");
+	system("sudo /var/www/sync/omxkill.py");
 	system("sudo /var/www/sync/startimageusb.py > /dev/null 2>&1 & echo $!");
 }
 
@@ -118,22 +133,6 @@ if ($_GET['action'] == 'audiousb') {
 	$outputtext =  "start audio player in usb mode";
 	exec("sudo /var/www/sync/omxkill.py");
 	exec("sudo omxplayer-sync -mu /media/usb/*.mp3 > /dev/null 2>&1 & echo $!");
-}
-
-
-if ($_GET['action'] == 'stoppdf') {
-	$outputtext = "pdf player stopped";
-	system("sudo killall fbgs");
-}
-
-if ($_GET['action'] == 'startppt') {
-	$outputtext =  "start pdf player";
-	system("sudo /var/www/sync/startppt.py > /dev/null 2>&1 & echo $!");
-}
-
-if ($_GET['action'] == 'pdfusb') {
-	$outputtext =  "start pdf player from usb";
-	system("sudo /var/www/sync/startpdfusb.py > /dev/null 2>&1 & echo $!");
 }
 
 if ($_GET['action'] == 'reboot') {
@@ -295,8 +294,9 @@ if ($_GET['action'] == 'controlpanelintern') {
 }
 
 if ($_GET['action'] == 'depencies1') {
-	$outputtext =  "update depencies1 exFAT+HFS";
+	$outputtext =  "update depencies";
 	system("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
 	system("sudo /var/www/sync/depencies1.py &");
 
 }
@@ -334,6 +334,15 @@ if ($_GET['action'] == 'hdmi_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterusb.py");
 	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterone.py");
 	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startslave.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster01.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster02.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster03.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster04.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster05.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmaster06.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterone01.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterone02.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /var/www/sync/startmasterone03.py");
 	$outputtext =  "Audio set to HDMI";
 }
 
@@ -343,6 +352,15 @@ if ($_GET['action'] == 'jack_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterusb.py");
 	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterone.py");
 	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startslave.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster01.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster02.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster03.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster04.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster05.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmaster06.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterone01.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterone02.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o local/' /var/www/sync/startmasterone03.py");
 	$outputtext =  "Audio set to Jack";
 }
 
@@ -352,6 +370,15 @@ if ($_GET['action'] == 'both_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterusb.py");
 	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterone.py");
 	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startslave.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster01.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster02.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster03.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster04.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster05.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmaster06.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterone01.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterone02.py");
+	system("sudo sed -ri 's/-o [a-z]+/-o both/' /var/www/sync/startmasterone03.py");
 	$outputtext =  "Audio set to both";
 }
 
@@ -359,6 +386,46 @@ if ($_GET['action'] == 'screenshare') {
 	$outputtext =  "set to screenshare mode";
 	system("sudo cp /var/www/sync/rc.local.screenshare /etc/rc.local");
 }
+
+
+if ($_GET['action'] == 'imageconform') {
+	system("sudo mogrify -format jpg /media/internal/*.png");
+	system("sudo mogrify -format jpg /media/internal/*.tiff");
+	system("sudo mogrify -format jpg /media/internal/*.tif");
+	system("sudo mogrify -format jpg /media/internal/*.jpeg");
+	system("sudo mogrify -format jpg /media/internal/*.bmp");
+	system("sudo mogrify -format jpg /media/internal/*.gif");
+
+	system("sudo rm /media/internal/*.png");
+	system("sudo rm /media/internal/*.tiff");
+	system("sudo rm /media/internal/*.tif");
+	system("sudo rm /media/internal/*.jpeg");
+	system("sudo rm /media/internal/*.bmp");
+	system("sudo rm /media/internal/*.gif");
+
+	system("sudo mogrify -resize 1920x1080\> /media/internal/*.jpg");
+	$outputtext =  "FINISHED! all images converted to jpg and resized to HD";
+}
+
+if ($_GET['action'] == 'slidetime5') {
+	system("sudo sed -ri 's/-t [0-9]+/-t 5/' /var/www/sync/startimage.py");
+	system("sudo sed -ri 's/-t [0-9]+/-t 5/' /var/www/sync/startimageusb.py");
+	$outputtext =  "set slideshowtime to 5s";
+}
+
+if ($_GET['action'] == 'slidetime10') {
+	system("sudo sed -ri 's/-t [0-9]+/-t 10/' /var/www/sync/startimage.py");
+	system("sudo sed -ri 's/-t [0-9]+/-t 10/' /var/www/sync/startimageusb.py");
+	$outputtext =  "set slideshowtime to 10s";
+}
+
+if ($_GET['action'] == 'slidetime15') {
+	system("sudo sed -ri 's/-t [0-9]+/-t 15/' /var/www/sync/startimage.py");
+	system("sudo sed -ri 's/-t [0-9]+/-t 15/' /var/www/sync/startimageusb.py");
+	$outputtext =  "set slideshowtime to 15s";
+}
+
+
 
 echo $outputtext;
 ?>
