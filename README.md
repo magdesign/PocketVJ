@@ -13,6 +13,8 @@ This file is only useful if you use the omxplayer-sync https://github.com/turing
 
 Read the installations instructions to get also the custom build of omxplayer.
 
+The videofiles have to be stored in /media/internal/
+
 
 
 Dependencies to install:
