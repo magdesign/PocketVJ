@@ -225,6 +225,12 @@ if ($_GET['action'] == 'hdmivga') {
 	system("sudo cp /var/www/sync/forcevga /boot/config.txt");
 }
 
+if ($_GET['action'] == 'force1200') {
+	$outputtext =  "force 1920x1200 rb";
+	system("sudo cp /var/www/sync/force1200 /boot/config.txt");
+}
+
+
 if ($_GET['action'] == 'clean') {
 	$outputtext =  "clean hidden files";
 	system("sudo rm -R /media/internal/.[DTf_]*");
@@ -236,6 +242,14 @@ if ($_GET['action'] == 'getresolution') {
 	$preoutputtext =  "<pre>$output</pre>";
 	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
 }
+
+if ($_GET['action'] == 'parser') {
+    $output = shell_exec('sudo tvservice -d edid.dat');
+    $output = shell_exec('sudo edidparser edid.dat');
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
+}
+
 
 if ($_GET['action'] == 'testscreen') {
     exec("sudo /var/www/sync/omxkill.py");
@@ -425,7 +439,27 @@ if ($_GET['action'] == 'slidetime15') {
 	$outputtext =  "set slideshowtime to 15s";
 }
 
+if ($_GET['action'] == 'diskspace') {
+    $output = shell_exec('df -h /media');
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
+}
 
+if ($_GET['action'] == 'temperature') {
+    $output = shell_exec('sudo /var/www/sync/temperature.py 11 4');
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
+}
+
+if ($_GET['action'] == 'heateron') {
+	$outputtext =  "Heater ON !!!";
+	system("sudo /var/www/sync/relais1_on.py &");
+}
+
+if ($_GET['action'] == 'heateroff') {
+	$outputtext =  "Heater OFF !!!";
+	system("sudo /var/www/sync/relais1_off.py &");
+}
 
 echo $outputtext;
 ?>
