@@ -87,6 +87,12 @@ if ($_GET['action'] == 'startmasteronce03') {
 	$outputtext = "start video 03 once";
 }
 
+if ($_GET['action'] == 'startmasteronce04') {
+	exec("sudo /var/www/sync/omxkill.py");
+	system("sudo /var/www/sync/testscreenoff.py &");
+	exec("sudo /var/www/sync/startmasterone04.py");
+	$outputtext = "start video 04 once";
+}
 
 if ($_GET['action'] == 'startslave') {
        exec("sudo /var/www/sync/omxkill.py");
