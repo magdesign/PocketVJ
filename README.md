@@ -15,7 +15,7 @@ Add www-data to your sudoers list with: `visudo` add this line at the end: `www-
 The videofiles have to be stored in `/media/internal/`
 
 
-Dependencies to install:
+###Dependencies to install:
 
 apt-get -y install ntfs-3g
 
