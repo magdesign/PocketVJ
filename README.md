@@ -7,7 +7,9 @@ http://www.pocketvj.com
 
 This file is used to control the PocketVJ over the webbrowser.
 Put the index.php into your web directory followed by the sync and extplorer folder.
+
 This file is only useful if you use the omxplayer-sync https://github.com/turingmachine/omxplayer-sync script.
+
 Read the installations instructions to get also the custom build of omxplayer.
 
 Add www-data to your sudoers list with: visudo add this line: www-data ALL=(ALL) NOPASSWD: ALL
@@ -15,11 +17,12 @@ Add www-data to your sudoers list with: visudo add this line: www-data ALL=(ALL)
 The videofiles have to be stored in /media/internal/
 
 
-
 Dependencies to install:
 
 apt-get -y install ntfs-3g
+
 apt-get -y install python-pexpect
+
 apt-get -y install vim
 
 apt-get -y install figlet
