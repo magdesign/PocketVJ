@@ -7,9 +7,9 @@ Put the index.php into your web directory followed by the sync and extplorer fol
 
 This file is only useful if you use the omxplayer-sync https://github.com/turingmachine/omxplayer-sync script.
 Read turingmachines installations instructions and get the custom build of omxplayer.
-
-##Instruction
 ========
+##Instruction
+
 Add www-data to your sudoers list with: `visudo` add this line at the end: `www-data ALL=(ALL) NOPASSWD: ALL`
 
 The videofiles have to be stored in `/media/internal/`
