@@ -1,7 +1,4 @@
-# PocketVJ
--
-
-PocketVJ Control Panel
+# PocketVJ Control Panel
 
 http://www.pocketvj.com
 
