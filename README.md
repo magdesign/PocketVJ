@@ -13,6 +13,7 @@ This file is only useful if you use the omxplayer-sync https://github.com/turing
 
 Read the installations instructions to get also the custom build of omxplayer.
 
+Add www-data to your sudoers list with: visudo add this line: www-data ALL=(ALL) NOPASSWD: ALL
 The videofiles have to be stored in /media/internal/
 
 
