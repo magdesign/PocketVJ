@@ -1,5 +1,5 @@
 # PocketVJ
-========
+-
 
 PocketVJ Control Panel
 
