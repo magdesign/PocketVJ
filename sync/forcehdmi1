@@ -1,5 +1,5 @@
 hdmi_force_hotplug=1
-
+disable_splash=1
 
 # uncomment to force a HDMI mode rather than DVI. This can make audio work in
 # DMT (computer monitor) modes

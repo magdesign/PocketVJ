@@ -1,4 +1,4 @@
-
+disable_splash=1
 hdmi_force_hotplug=1
 
 # force HDMI mode (1080p)

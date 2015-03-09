@@ -12,8 +12,8 @@
   <title>ControlPanel</title>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="css/site_global.css?365011649"/>
-  <link rel="stylesheet" type="text/css" href="css/master_a-master.css?315746633"/>
-  <link rel="stylesheet" type="text/css" href="css/index.css?4278676521" id="pagesheet"/>
+  <link rel="stylesheet" type="text/css" href="css/master_a-master.css?202810042"/>
+  <link rel="stylesheet" type="text/css" href="css/index.css?139688156" id="pagesheet"/>
   <!-- Other scripts -->
   <script type="text/javascript">
    document.documentElement.className += ' js';
@@ -23,7 +23,7 @@
 
   <div class="clearfix" id="page"><!-- column -->
    <div class="clearfix colelem" id="u75-4"><!-- content -->
-    <p>PocketVJ Control Panel v0.52</p>
+    <p>PocketVJ Control Panel v0.6</p>
    </div>
    <div class="colelem" id="u1824"><!-- custom html -->
     <table width="380" border="1" align="center">
@@ -70,6 +70,11 @@
       <div class=" NoWrap clearfix colelem" id="u173-6"><!-- content -->
        <p>Boot</p>
        <p>Autostart</p>
+      </div>
+     </div>
+     <div class="TabbedPanelsTab clearfix grpelem" id="u2478"><!-- vertical box -->
+      <div class=" NoWrap clearfix colelem" id="u2479-4"><!-- content -->
+       <p>Timer</p>
       </div>
      </div>
      <div class="TabbedPanelsTab clearfix grpelem" id="u134"><!-- vertical box -->
@@ -122,18 +127,7 @@
        <a class="nonblock action nontext clip_frame grpelem" id="u1838" href="?action=testscreen"><!-- image --><img class="block" id="u1838_img" src="images/14_testscreenon.jpg" alt="" width="116" height="40"/></a>
        <a class="nonblock action nontext clip_frame grpelem" id="u1840" href="?action=testscreenoff"><!-- image --><img class="block" id="u1840_img" src="images/14_testscreenoff.jpg" alt="" width="44" height="40"/></a>
       </div>
-      <div class="clearfix colelem" id="u804-4"><!-- content -->
-       <p>Audio Output Selection:</p>
-      </div>
-      <div class="clearfix colelem" id="pu1623"><!-- group -->
-       <a class="nonblock action nontext clip_frame grpelem" id="u1623" href="?action=hdmi_out"><!-- image --><img class="block" id="u1623_img" src="images/23_audioout1.jpg" alt="" width="51" height="40"/></a>
-       <a class="nonblock action nontext clip_frame grpelem" id="u1626" href="?action=jack_out"><!-- image --><img class="block" id="u1626_img" src="images/23_audioout2.jpg" alt="" width="68" height="40"/></a>
-       <a class="nonblock action nontext clip_frame grpelem" id="u1629" href="?action=both_out"><!-- image --><img class="block" id="u1629_img" src="images/23_audioout3.jpg" alt="" width="41" height="40"/></a>
-       <div class="clearfix grpelem" id="u832-4"><!-- content -->
-        <p>works for video and audio player</p>
-       </div>
-      </div>
-      <a class="nonblock action nontext clip_frame colelem" id="u1909" href="?action=reboot"><!-- image --><img class="block" id="u1909_img" src="images/13_reboot.jpg" alt="" width="160" height="40"/></a>
+      <a class="nonblock action nontext clip_frame colelem" id="u2563" href="?action=stop"><!-- image --><img class="block" id="u2563_img" src="images/01_stop.jpg" alt="" width="160" height="40"/></a>
      </div>
      <div class="TabbedPanelsContent invi clearfix grpelem" id="u2064"><!-- column -->
       <a class="nonblock action nontext clip_frame colelem" id="u2096" href="?action=stop"><!-- image --><img class="block" id="u2096_img" src="images/01_stop.jpg" alt="" width="160" height="40"/></a>
@@ -251,6 +245,14 @@
        <a class="nonblock action nontext clip_frame grpelem" id="u1637" href="?action=jack_out"><!-- image --><img class="block" id="u1637_img" src="images/23_audioout2.jpg" alt="" width="68" height="40"/></a>
        <a class="nonblock action nontext clip_frame grpelem" id="u1639" href="?action=both_out"><!-- image --><img class="block" id="u1639_img" src="images/23_audioout3.jpg" alt="" width="41" height="40"/></a>
       </div>
+      <div class="clearfix colelem" id="pu2556"><!-- group -->
+       <div class="clip_frame grpelem" id="u2556"><!-- image -->
+        <img class="block" id="u2556_img" src="images/23_audiotest.png" alt="" width="160" height="40"/>
+       </div>
+       <div class="clearfix grpelem" id="u2562-4"><!-- content -->
+        <p>not implemented coming soon...</p>
+       </div>
+      </div>
       <div class="clearfix colelem" id="u1166-4"><!-- content -->
        <p>Projector Info:</p>
       </div>
@@ -276,12 +278,10 @@
         <a class="nonblock action nontext clip_frame colelem" id="u2368" href="?action=heateron"><!-- image --><img class="block" id="u2368_img" src="images/24_heateron.png" alt="" width="160" height="40"/></a>
         <a class="nonblock action nontext clip_frame colelem" id="u2362" href="?action=heateroff"><!-- image --><img class="block" id="u2362_img" src="images/24_heateroff.png" alt="" width="160" height="40"/></a>
        </div>
-       <div class="clearfix grpelem" id="u2374-11"><!-- content -->
+       <div class="clearfix grpelem" id="u2374-8"><!-- content -->
         <p>Turn on the</p>
         <p>integrated heater</p>
         <p>(GC&#45;II only)</p>
-        <p>&nbsp;</p>
-        <p>only use in cold conditions</p>
        </div>
       </div>
      </div>
@@ -298,7 +298,38 @@
       <a class="nonblock action nontext clip_frame colelem" id="u1199" href="?action=setaudio"><!-- image --><img class="block" id="u1199_img" src="images/25_audio.jpg" alt="" width="160" height="40"/></a>
       <a class="nonblock action nontext clip_frame colelem" id="u1223" href="?action=setaudiousb"><!-- image --><img class="block" id="u1223_img" src="images/25_setaudiousb.jpg" alt="" width="160" height="40"/></a>
       <a class="nonblock action nontext clip_frame colelem" id="u1878" href="?action=screenshare"><!-- image --><img class="block" id="u1878_img" src="images/25_setsharing.jpg" alt="" width="160" height="40"/></a>
+      <a class="nonblock action nontext clip_frame colelem" id="u2542" href="?action=setscheduler"><!-- image --><img class="block" id="u2542_img" src="images/25_setscheduler.png" alt="" width="160" height="40"/></a>
       <a class="nonblock action nontext clip_frame colelem" id="u1867" href="?action=reboot"><!-- image --><img class="block" id="u1867_img" src="images/13_reboot.jpg" alt="" width="160" height="40"/></a>
+     </div>
+     <div class="TabbedPanelsContent invi clearfix grpelem" id="u2482"><!-- column -->
+      <div class="clearfix colelem" id="u2515-4"><!-- content -->
+       <p>Time Info:</p>
+      </div>
+      <a class="nonblock action nontext clip_frame colelem" id="u2517" href="?action=gettime"><!-- image --><img class="block" id="u2517_img" src="images/28_gettime.png" alt="" width="160" height="40"/></a>
+      <div class="clearfix colelem" id="u2516-4"><!-- content -->
+       <p>Timer/Scheduler:</p>
+      </div>
+      <a class="nonblock action nontext clip_frame colelem" id="u2537" href="?action=timeron"><!-- image --><img class="block" id="u2537_img" src="images/28_timeron.png" alt="" width="160" height="40"/></a>
+      <a class="nonblock action nontext clip_frame colelem" id="u2526" href="?action=timeroff"><!-- image --><img class="block" id="u2526_img" src="images/28_timeroff.png" alt="" width="160" height="40"/></a>
+      <div class="clearfix colelem" id="u2554-4"><!-- content -->
+       <p>Scheduler:</p>
+      </div>
+      <a class="nonblock action nontext clip_frame colelem" id="u2548" href="?action=timer"><!-- image --><img class="block" id="u2548_img" src="images/28_displaytimer.png" alt="" width="160" height="40"/></a>
+      <div class="clearfix colelem" id="u2555-25"><!-- content -->
+       <p>To create a timer file:</p>
+       <p>&nbsp;</p>
+       <p>Downlad the timer example file on</p>
+       <p>&nbsp;<a class="nonblock action" href="http://www.pocketvj.com" target="_blank">www.pocketvj.com</a></p>
+       <p>edit it to your needs and copy it to</p>
+       <p>/media/timer.txt</p>
+       <p>&nbsp;</p>
+       <p>Activate with the buttons above...</p>
+       <p>Does not need a restart to function!</p>
+       <p>&nbsp;</p>
+       <p>Keep in mind that the PocketVJ can not store the time and after every power loss time will be different</p>
+       <p>&nbsp;</p>
+       <p>&nbsp;</p>
+      </div>
      </div>
      <div class="TabbedPanelsContent invi clearfix grpelem" id="u121"><!-- column -->
       <div class="clearfix colelem" id="u855-4"><!-- content -->
@@ -347,9 +378,7 @@
    <div class="verticalspacer"></div>
   </div>
   <!-- JS includes -->
-  <script type="text/javascript">
-   if (document.location.protocol != 'https:') document.write('\x3Cscript src="http://musecdn2.businesscatalyst.com/scripts/4.0/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
-</script>
+  
   <script type="text/javascript">
    window.jQuery || document.write('\x3Cscript src="scripts/jquery-1.8.3.min.js" type="text/javascript">\x3C/script>');
 </script>

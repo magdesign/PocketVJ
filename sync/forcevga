@@ -1,4 +1,5 @@
 #disable_overscan=1
+disable_splash=1
 hdmi_group=2
 hdmi_mode=9
 hdmi_drive=2

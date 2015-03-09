@@ -58,7 +58,6 @@ if ($_GET['action'] == 'startmaster06') {
 }
 
 
-
 if ($_GET['action'] == 'startmasteronce') {
 	exec("sudo /var/www/sync/omxkill.py");
 	system("sudo /var/www/sync/testscreenoff.py &");
@@ -108,6 +107,8 @@ if ($_GET['action'] == 'startusb') {
 	$outputtext =  "start player in usb mode";	
 }
 
+
+
 if ($_GET['action'] == 'stopimage') {
 	$outputtext =  "image player stopped";
 	system("sudo killall fbi");
@@ -127,13 +128,27 @@ if ($_GET['action'] == 'imageusb') {
 	system("sudo /var/www/sync/startimageusb.py > /dev/null 2>&1 & echo $!");
 }
 
+//# Testscreen
+
+if ($_GET['action'] == 'testscreen') {
+    exec("sudo /var/www/sync/omxkill.py");
+	system("sudo killall fbi");
+	system("sudo /var/www/sync/testscreen.py &");
+    $outputtext =  "testscreen activated (needs 2 clicks to activate)"; 
+}
+
+if ($_GET['action'] == 'testscreenoff') {
+    system("sudo /var/www/sync/testscreenoff.py &");
+	$outputtext =  "testscreen deactivated";
+}
+
+
 
 if ($_GET['action'] == 'audio') {
 	exec("sudo /var/www/sync/omxkill.py");
 	exec("sudo omxplayer-sync -mu /media/internal/*.mp3 > /dev/null 2>&1 & echo $!");
 	$outputtext = "start audio player";
 }
-
 
 if ($_GET['action'] == 'audiousb') {
 	$outputtext =  "start audio player in usb mode";
@@ -155,6 +170,8 @@ if ($_GET['action'] == 'mount') {
 	$outputtext =  "usb stick mounted";
 	system("sudo mount /dev/sda1 /media/usb/");
 }
+
+
 
 if ($_GET['action'] == 'master') {
 	$outputtext = "master set";
@@ -195,6 +212,8 @@ if ($_GET['action'] == 'setaudiousb') {
 	$outputtext =  "autostart audio usb set";
 	system("sudo cp /var/www/sync/rc.local.audiousb /etc/rc.local");
 }
+
+
 
 if ($_GET['action'] == 'bootconf') {
 	$outputtext =  "custom boot conf to boot";
@@ -243,6 +262,17 @@ if ($_GET['action'] == 'clean') {
 	system("sudo rm -R /media/internal/__MACOSX");
 }
 
+
+if ($_GET['action'] == 'screenon') {
+	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -p');	
+}
+
+if ($_GET['action'] == 'screenoff') {
+	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -o');
+}
+
+//# Display Info
+
 if ($_GET['action'] == 'getresolution') {
 	$output = shell_exec('sudo tvservice -s');
 	$preoutputtext =  "<pre>$output</pre>";
@@ -254,29 +284,6 @@ if ($_GET['action'] == 'parser') {
     $output = shell_exec('sudo edidparser edid.dat');
 	$preoutputtext =  "<pre>$output</pre>";
 	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
-}
-
-
-if ($_GET['action'] == 'testscreen') {
-    exec("sudo /var/www/sync/omxkill.py");
-	system("sudo killall fbi");
-	system("sudo /var/www/sync/testscreen.py &");
-    $outputtext =  "testscreen activated"; 
-}
-
-if ($_GET['action'] == 'testscreenoff') {
-    system("sudo /var/www/sync/testscreenoff.py &");
-	$outputtext =  "testscreen deactivated";
-}
-
-
-if ($_GET['action'] == 'screenon') {
-	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -p');	
-}
-
-
-if ($_GET['action'] == 'screenoff') {
-	$outputtext = shell_exec('sudo /opt/vc/bin/tvservice -o');
 }
 
 if ($_GET['action'] == 'codecinfo') {
@@ -291,6 +298,14 @@ if ($_GET['action'] == 'movieinfo') {
 	$newtext = wordwrap($preoutputtext2, 30, "<br />\n");
 	$outputtext = "$newtext\n";
 }
+
+if ($_GET['action'] == 'diskspace') {
+    $output = shell_exec('df -h /media');
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
+}
+
+//# Firmmware Stuff
 
 if ($_GET['action'] == 'firmware') {
 	$outputtext =  "upgrade player and sync";
@@ -321,7 +336,6 @@ if ($_GET['action'] == 'depencies1') {
 
 }
 
-
 if ($_GET['action'] == 'factoryreset') {
 	$outputtext =  "factory reset system";
 	system("sudo cp /var/www/sync/omxplayer-sync /usr/bin/omxplayer-sync");
@@ -336,6 +350,7 @@ if ($_GET['action'] == 'removeold') {
 
 }
 
+//# Audio Volume
 
 if ($_GET['action'] == 'volume_up') {
 	system("sudo su - pi -c 'amixer set Master 10%+'");
@@ -347,6 +362,7 @@ if ($_GET['action'] == 'volume_down') {
 	$outputtext =  "<pre>$output</pre>";
 }
 
+//# Audio Output
 
 if ($_GET['action'] == 'hdmi_out') {
 	system("sudo sed -ri 's/-o [a-z]+/-o hdmi/' /etc/rc.local");
@@ -427,6 +443,8 @@ if ($_GET['action'] == 'imageconform') {
 	$outputtext =  "FINISHED! all images converted to jpg and resized to HD";
 }
 
+//# Slideshow Time
+
 if ($_GET['action'] == 'slidetime5') {
 	system("sudo sed -ri 's/-t [0-9]+/-t 5/' /var/www/sync/startimage.py");
 	system("sudo sed -ri 's/-t [0-9]+/-t 5/' /var/www/sync/startimageusb.py");
@@ -445,11 +463,7 @@ if ($_GET['action'] == 'slidetime15') {
 	$outputtext =  "set slideshowtime to 15s";
 }
 
-if ($_GET['action'] == 'diskspace') {
-    $output = shell_exec('df -h /media');
-	$preoutputtext =  "<pre>$output</pre>";
-	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
-}
+//# Extension
 
 if ($_GET['action'] == 'temperature') {
     $output = shell_exec('sudo /var/www/sync/temperature.py 11 4');
@@ -466,6 +480,40 @@ if ($_GET['action'] == 'heateroff') {
 	$outputtext =  "Heater OFF !!!";
 	system("sudo /var/www/sync/relais1_off.py &");
 }
+
+
+//# Sheduler
+
+
+if ($_GET['action'] == 'setscheduler') {
+	$outputtext = "autostart into scheduler mode";
+	system("sudo cp /var/www/sync/rc.local.scheduler /etc/rc.local");
+}
+
+if ($_GET['action'] == 'gettime') {
+    $output = shell_exec('date');
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 51, "<br />\n");
+}
+
+if ($_GET['action'] == 'timeron') {
+	$outputtext =  "enable scheduler, TIMER ON";
+	system("sudo crontab /media/timer.txt");
+}
+
+if ($_GET['action'] == 'timeroff') {
+	$outputtext =  "disable scheduler, NO TIMER";
+	system("sudo crontab /var/www/sync/notimer");
+}
+
+
+if ($_GET['action'] == 'timer') {
+    $output = shell_exec('sudo crontab -l | grep -v "^$\|^\s*\#"');
+	$preoutputtext =  "<pre>$output</pre>";
+	$outputtext = wordwrap($preoutputtext, 102, "<br />\n");
+}
+
+
 
 echo $outputtext;
 ?>

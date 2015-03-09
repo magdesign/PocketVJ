@@ -1,4 +1,5 @@
 hdmi_force_hotplug=1
+disable_splash=1
 
 # uncomment if you get no picture on HDMI for a default "safe" mode
 #hdmi_safe=1
