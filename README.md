@@ -12,7 +12,7 @@ Read turingmachines installation instructions and get the custom build of omxpla
 
 Add www-data to your sudoers list with: `visudo` add this line at the end: `www-data ALL=(ALL) NOPASSWD: ALL`
 
-The videofiles have to be stored in `/media/internal/`
+The videofiles have to be stored in `/media/internal/video`
 
 
 ###Dependencies to install:
