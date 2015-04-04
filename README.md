@@ -60,3 +60,5 @@ apt-get -y install dosfstools
 apt-get -y install exfat-utils exfat-fuse
 
 apt-get -y install hfsplus hfsprogs hfsutils
+
+apt-get -y install avahi-daemon
