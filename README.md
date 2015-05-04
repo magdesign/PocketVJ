@@ -14,6 +14,9 @@ Add www-data to your sudoers list with: `visudo` add this line at the end: `www-
 
 The videofiles have to be stored in `/media/internal/video`
 
+##To Do:
+
+- Create a .torrent image for download (anyone can tell me where to host the 16GB image as torrent?)
 
 ###Dependencies to install:
 
