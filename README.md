@@ -18,7 +18,7 @@ The videofiles have to be stored in `/media/internal/video`
 
 - Create a .torrent image for download (anyone can tell me where to host the 16GB image as torrent?)
 
-###Dependencies to install:
+##Dependencies to install:
 
 apt-get -y install ntfs-3g
 
