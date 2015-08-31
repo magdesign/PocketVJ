@@ -14,7 +14,7 @@ Only works on a RPI 1
 
 Add www-data to your sudoers list with: `visudo` add this line at the end: `www-data ALL=(ALL) NOPASSWD: ALL`
 
-The videofiles have to be stored in `/media/internal/video`
+The videofiles have to be stored in `/media/internal/*`
 
 
 ##Dependencies to install:
