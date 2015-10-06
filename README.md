@@ -8,7 +8,9 @@ Put the index.php into your web directory followed by the sync and extplorer fol
 This file is only useful if you use the omxplayer-sync https://github.com/turingmachine/omxplayer-sync script.
 Read turingmachines installation instructions and get the custom build of omxplayer.
 
-Only works on a RPI 1
+Only works on a RPI 1.
+
+Pre-installed Wifi driver is: Ralink RT5370
 
 ##Instruction
 
