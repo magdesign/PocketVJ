@@ -1,3 +1,5 @@
+! It is not possible to upgrade PocketVJ 1.0 to 2.0 or 3.0 !
+
 # PocketVJ Control Panel
 
 http://www.pocketvj.com
