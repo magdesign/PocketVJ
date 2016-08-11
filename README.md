@@ -11,6 +11,7 @@ This file is only useful if you use the omxplayer-sync https://github.com/turing
 Read turingmachines installation instructions and get the custom build of omxplayer.
 
 Only works on a RPI 1.
+
 J.F.Guiton reported that it will not work on a RPI B+, since there is an USB/Ethernet driver missing...
 
 Pre-installed Wifi driver is: Ralink RT5370
