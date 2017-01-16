@@ -30,6 +30,9 @@ Download PocketVJ 1.0 Image (for RPI1 /16gb SD): http://www.pocketvj.com/downloa
 
 Download the 3D files to print the case on Thingiverse<br />
 
+Compared to the amount of downloads, there are less than a hand full donations.<br />
+Even $5 (for this I can get a coffe around the corner) are very motivating.
+https://www.paypal.com/uk/cgi-bin/webscr?cmd=_flow&SESSION=e1F3oj9OySKW1eqxiORZKJq5O1fDJVDsai7B7Mq_9g-YGr53qO8N9qEtFvm&dispatch=5885d80a13c0db1f8e263663d3faee8d333dc9aadeed3fe0b5b299d55fd35542
 
 ##Dependencies to install:
 
