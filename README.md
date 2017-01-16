@@ -24,9 +24,7 @@ The videofiles have to be stored in `/media/internal/*`
 
 ##Fully configured image
 
-Download PocketVJ 1.0 Image (for RPI1 /16gb SD) http://www.pocketvj.com/downloads/vj100.img(to use with win32 diskimager)
-Download PocketVJ 1.0  (for RPI1/16gb SD) as a GNU Zipped Archive http://www.pocketvj.com/downloads/vj100.gz(to copy with dd: gzip -dc ~/Desktop/vj100.gz | sudo dd of=/dev/rdisk* bs=1M)
-You are welcome to contribute.
+Download PocketVJ 1.0 Image (for RPI1 /16gb SD): http://www.pocketvj.com/downloads/vj100.img (to use with win32 diskimager)<br />Download PocketVJ 1.0  (for RPI1/16gb SD) as a GNU Zipped Archive: http://www.pocketvj.com/downloads/vj100.gz (to copy with dd: gzip -dc ~/Desktop/vj100.gz | sudo dd of=/dev/rdisk* bs=1M)<br />You are welcome to contribute.
 (works only on a rpi1, for wifi and user passwords write me an email)
 
 Download the 3D files to print the case on Thingiverse
