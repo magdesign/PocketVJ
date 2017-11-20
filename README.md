@@ -36,48 +36,26 @@ https://www.paypal.com/uk/cgi-bin/webscr?cmd=_flow&SESSION=e1F3oj9OySKW1eqxiORZK
 
 ##Dependencies to install:
 
-apt-get -y install ntfs-3g
-
-apt-get -y install python-pexpect
-
-apt-get -y install vim
-
-apt-get -y install figlet
-
-apt-get -y install git-core
-
-apt-get -y install firmware-ralink
-
-apt-get -y install hostapd udhcpd
-
-apt-get -y install lighttpd
-
-apt-get -y install samba samba-common-bin
-
-apt-get -y install php5-common php5-cgi php5 php5-mysql
-
-apt-get -y install screen
-
-apt-get -y install fbi
-
-apt-get -y install ttf-mscorefonts-installer
-
-apt-get -y install mediainfo
-
-apt-get -y install gparted
-
-apt-get -y install php5-cli
-
-apt-get -y install iptables
-
-apt-get -y install xtightvncviewer
-
-apt-get -y install imagemagick
-
-apt-get -y install dosfstools
-
-apt-get -y install exfat-utils exfat-fuse
-
-apt-get -y install hfsplus hfsprogs hfsutils
-
-apt-get -y install avahi-daemon
+sudo apt-get -y install ntfs-3g \
+python-pexpect \
+vim \
+figlet \
+git-core \
+firmware-ralink \
+hostapd udhcpd \
+lighttpd \
+samba samba-common-bin \
+php5-common php5-cgi php5 php5-mysql \
+screen \
+fbi \
+ttf-mscorefonts-installer \
+mediainfo \
+gparted \
+php5-cli \
+iptables \
+xtightvncviewer \
+imagemagick \
+dosfstools \
+exfat-utils exfat-fuse \
+hfsplus hfsprogs hfsutils \
+avahi-daemon
