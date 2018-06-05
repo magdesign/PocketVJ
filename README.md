@@ -7,6 +7,11 @@ http://www.pocketvj.com
 This file is used to control the PocketVJ over the webbrowser.
 Put the index.php into your web directory followed by the sync and extplorer folder.
 
+### If you want to update as described here:
+### Make sure to rename the unziped folder to www.
+### Link to the depencies file: http://yokto.magdesign.ch/soft/depencies_01.zip
+
+
 This file is only useful if you use the omxplayer-sync https://github.com/turingmachine/omxplayer-sync script.
 Read turingmachines installation instructions and get the custom build of omxplayer.
 
