@@ -7,7 +7,7 @@ http://www.pocketvj.com
 This file is used to control the PocketVJ over the webbrowser.
 Put the index.php into your web directory followed by the sync and extplorer folder.
 
-### If you want to update as described here:
+### If you want to update as described here: https://vimeo.com/118030944
 ### Make sure to rename the unziped folder to www.
 ### Link to the depencies file: http://yokto.magdesign.ch/soft/depencies_01.zip
 
